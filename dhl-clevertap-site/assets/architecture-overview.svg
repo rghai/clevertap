@@ -1,0 +1,65 @@
+<svg width="1200" height="860" viewBox="0 0 1200 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="860" rx="28" fill="#F8FAFC"/>
+  <text x="70" y="82" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#101828">Recommended operating model</text>
+
+  <rect x="450" y="256" width="300" height="340" rx="28" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+  <rect x="486" y="292" width="228" height="56" rx="16" fill="#FFF2F3"/>
+  <text x="600" y="326" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#D40511">CleverTap</text>
+  <text x="600" y="362" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Profile, behavior, segmentation, activation</text>
+
+  <rect x="502" y="406" width="196" height="48" rx="14" fill="#F7F9FC" stroke="#E6E8EC"/>
+  <text x="600" y="436" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#101828">Owned-channel events</text>
+  <rect x="502" y="470" width="196" height="48" rx="14" fill="#F7F9FC" stroke="#E6E8EC"/>
+  <text x="600" y="500" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#101828">Profile progression</text>
+  <rect x="502" y="534" width="196" height="48" rx="14" fill="#F7F9FC" stroke="#E6E8EC"/>
+  <text x="600" y="564" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#101828">Audience activation</text>
+
+  <g>
+    <rect x="70" y="132" width="260" height="136" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+    <text x="102" y="176" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">Website / App</text>
+    <text x="102" y="210" font-family="Arial, sans-serif" font-size="15" fill="#475467">Anonymous and known behavior capture</text>
+    <text x="102" y="236" font-family="Arial, sans-serif" font-size="15" fill="#475467">Pricing, tracking, service, conversion</text>
+  </g>
+
+  <g>
+    <rect x="870" y="132" width="260" height="136" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+    <text x="902" y="176" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">Google</text>
+    <text x="902" y="210" font-family="Arial, sans-serif" font-size="15" fill="#475467">Anonymous acquisition and modeling</text>
+    <text x="902" y="236" font-family="Arial, sans-serif" font-size="15" fill="#475467">Enhanced conversions and offline linkage</text>
+  </g>
+
+  <g>
+    <rect x="70" y="614" width="260" height="136" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+    <text x="102" y="658" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">LINE</text>
+    <text x="102" y="692" font-family="Arial, sans-serif" font-size="15" fill="#475467">Outbound messaging, LIFF, identity bridge</text>
+    <text x="102" y="718" font-family="Arial, sans-serif" font-size="15" fill="#475467">Service and profile enrichment channel</text>
+  </g>
+
+  <g>
+    <rect x="870" y="614" width="260" height="136" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+    <text x="902" y="658" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">Meta</text>
+    <text x="902" y="692" font-family="Arial, sans-serif" font-size="15" fill="#475467">Audience sync and paid social reach</text>
+    <text x="902" y="718" font-family="Arial, sans-serif" font-size="15" fill="#475467">Optional stronger event signal via CAPI</text>
+  </g>
+
+  <g>
+    <rect x="70" y="360" width="260" height="162" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2" stroke-dasharray="6 8"/>
+    <text x="102" y="404" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">Optional bot server</text>
+    <text x="102" y="438" font-family="Arial, sans-serif" font-size="15" fill="#475467">Reads LINE chat events</text>
+    <text x="102" y="464" font-family="Arial, sans-serif" font-size="15" fill="#475467">Adds intent, shipment context</text>
+    <text x="102" y="490" font-family="Arial, sans-serif" font-size="15" fill="#475467">Supports agent-assist and workflow triggers</text>
+  </g>
+
+  <path d="M330 200C391 200 395 325 450 325" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+  <path d="M750 325C805 325 809 200 870 200" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+  <path d="M330 682C391 682 395 526 450 526" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+  <path d="M750 526C805 526 809 682 870 682" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+  <path d="M330 441H450" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round" stroke-dasharray="8 8"/>
+
+  <circle cx="450" cy="325" r="8" fill="#D40511"/>
+  <circle cx="750" cy="325" r="8" fill="#D40511"/>
+  <circle cx="450" cy="526" r="8" fill="#D40511"/>
+  <circle cx="750" cy="526" r="8" fill="#D40511"/>
+
+  <text x="600" y="796" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#1D2939">Keep Google and Meta native where they are strongest. Use CleverTap as the customer logic layer across them.</text>
+</svg>

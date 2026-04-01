@@ -1,0 +1,35 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="28" fill="#F8FAFC"/>
+  <text x="70" y="76" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#101828">Google: anonymous acquisition remains native, CleverTap adds behavior and later identity enrichment</text>
+
+  <rect x="70" y="128" width="1060" height="184" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+  <text x="104" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">Current-state foundation</text>
+  <rect x="104" y="196" width="230" height="80" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+  <text x="219" y="242" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#101828">Google tag / remarketing</text>
+  <rect x="484" y="196" width="230" height="80" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+  <text x="599" y="242" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#101828">Consent-aware measurement</text>
+  <rect x="864" y="196" width="230" height="80" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+  <text x="979" y="242" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#101828">Conversion modeling</text>
+  <path d="M334 236H484" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+  <path d="M714 236H864" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+
+  <rect x="70" y="350" width="510" height="340" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+  <text x="104" y="392" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">CleverTap out of the box</text>
+  <rect x="104" y="430" width="442" height="84" rx="18" fill="#FFF2F3" stroke="#F0C7CB"/>
+  <text x="325" y="466" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#D40511">Identified audiences in CleverTap</text>
+  <text x="325" y="492" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#5B6472">Behavior and profile logic once DHL has enough known data</text>
+  <path d="M325 514V560" stroke="#D40511" stroke-width="4" stroke-linecap="round"/>
+  <rect x="104" y="560" width="442" height="84" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+  <text x="325" y="603" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#101828">Google Ads audience upload</text>
+  <text x="325" y="627" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#5B6472">Best for reactivation, known-user remarketing and lifecycle targeting</text>
+
+  <rect x="620" y="350" width="510" height="340" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+  <text x="654" y="392" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">Advanced path</text>
+  <rect x="654" y="430" width="442" height="84" rx="18" fill="#FFF8E1" stroke="#F2E3B0"/>
+  <text x="875" y="466" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#7A5B00">Enhanced conversions</text>
+  <text x="875" y="492" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#5B6472">Web and leads, using stronger first-party data when available</text>
+  <path d="M875 514V560" stroke="#7A5B00" stroke-width="4" stroke-linecap="round"/>
+  <rect x="654" y="560" width="442" height="84" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+  <text x="875" y="598" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#101828">Offline and later-stage outcome linkage</text>
+  <text x="875" y="622" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#5B6472">Ideal when final value appears after support, sales or branch interaction</text>
+</svg>
