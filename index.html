@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DHL Growth & Customer Intelligence Blueprint | Reshape Consulting</title>
+  <meta name="description" content="A strategic blueprint for how DHL can use CleverTap as the central decisioning layer across anonymous traffic, paid media, conversion capture and LINE." />
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --surface-2: #fafbfc;
+      --surface-3: #f2f4f7;
+      --text: #101828;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --brand: #d40511;
+      --brand-soft: #fff2f3;
+      --gold: #ffcc00;
+      --gold-soft: #fff9e6;
+      --green: #0f8a5f;
+      --green-soft: #eef8f4;
+      --navy: #1f2b45;
+      --shadow: 0 16px 40px rgba(16,24,40,.07);
+      --radius: 22px;
+      --radius-sm: 16px;
+      --max: 1320px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #ffffff 0, #f8f9fb 180px, var(--bg) 100%);
+      line-height: 1.58;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .shell { max-width: var(--max); margin: 0 auto; padding: 0 28px 72px; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(255,255,255,.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(228,231,236,.9);
+    }
+    .topbar-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand-lockup { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .brand-badge {
+      width: 46px; height: 46px; border-radius: 14px;
+      display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--brand), #ef434c);
+      color: white; font-size: 13px; font-weight: 800; letter-spacing: .08em;
+      box-shadow: 0 12px 24px rgba(212,5,17,.18);
+      flex: 0 0 auto;
+    }
+    .eyebrow {
+      font-size: 11px; text-transform: uppercase; letter-spacing: .12em;
+      color: var(--brand); font-weight: 800; margin-bottom: 4px;
+    }
+    .brand-title { font-size: 15px; font-weight: 800; line-height: 1.15; }
+    .brand-subtitle { font-size: 12px; color: var(--muted); }
+    .top-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .chip {
+      border: 1px solid var(--line); border-radius: 999px; padding: 9px 13px;
+      background: var(--surface); font-size: 12px; text-decoration: none; color: var(--muted);
+    }
+    .chip.primary { color: var(--navy); font-weight: 700; background: linear-gradient(180deg, #fffef5, #fff); border-color: #f1e2a1; }
+
+    .hero { padding: 42px 0 18px; }
+    .hero-grid { display: grid; grid-template-columns: 1.28fr .92fr; gap: 22px; }
+    .hero-card, .panel, .mini-card, .accent-card, .accordion-item, .table-wrap, .takeaway-box {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
+    }
+    .hero-card {
+      padding: 34px;
+      background:
+        radial-gradient(circle at top right, rgba(255,204,0,.17), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(212,5,17,.11), transparent 24%),
+        var(--surface);
+      overflow: hidden;
+    }
+    .hero-card h1 { margin: 10px 0 16px; font-size: clamp(36px, 4.8vw, 60px); line-height: .96; letter-spacing: -.045em; max-width: 12.5ch; }
+    .hero-card p { margin: 0; color: var(--navy); font-size: 17px; max-width: 62ch; }
+    .hero-side { display: grid; gap: 16px; }
+    .stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .stat { padding: 18px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface-2); }
+    .stat strong { display: block; font-size: 30px; line-height: 1; letter-spacing: -.04em; margin-bottom: 8px; }
+    .stat span { font-size: 12px; color: var(--muted); display: block; }
+    .takeaway-box { padding: 22px; background: linear-gradient(180deg, #fffdf6, #fff); }
+    .takeaway-box strong { display: block; margin-bottom: 10px; color: #7a5800; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .takeaway-box p { margin: 0; color: var(--navy); }
+
+    .quick-nav {
+      position: sticky; top: 76px; z-index: 30; margin: 4px 0 24px;
+      background: rgba(255,255,255,.88); border: 1px solid rgba(228,231,236,.92);
+      border-radius: 20px; box-shadow: var(--shadow); backdrop-filter: blur(10px); padding: 10px;
+    }
+    .tablist { display: flex; gap: 10px; overflow-x: auto; }
+    .tab-button {
+      border: none; background: transparent; border-radius: 13px; padding: 12px 16px; cursor: pointer;
+      color: var(--muted); font-weight: 800; white-space: nowrap; transition: .18s ease;
+    }
+    .tab-button:hover, .tab-button:focus-visible { background: var(--surface-2); color: var(--text); outline: none; }
+    .tab-button.active { color: var(--brand); background: linear-gradient(180deg, rgba(212,5,17,.1), rgba(212,5,17,.05)); box-shadow: inset 0 0 0 1px rgba(212,5,17,.12); }
+
+    .panel { display: none; padding: 30px; scroll-margin-top: 140px; }
+    .panel.active { display: block; animation: fadeIn .26s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .section-head h2 { margin: 8px 0 10px; font-size: clamp(28px, 3.3vw, 44px); line-height: 1.02; letter-spacing: -.045em; }
+    .section-head p { margin: 0; max-width: 75ch; color: var(--navy); }
+    .head-note { min-width: 260px; max-width: 320px; padding: 18px; border-radius: 18px; background: linear-gradient(180deg, #fffef7, #fff); border: 1px solid #f0e4ba; color: var(--navy); font-size: 14px; }
+    .head-note strong { display: block; margin-bottom: 8px; color: #7a5800; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+
+    .grid-4, .grid-3, .grid-2, .architecture-grid, .action-grid { display: grid; gap: 16px; }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .architecture-grid { grid-template-columns: 1.02fr .98fr; align-items: start; }
+    .action-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+
+    .mini-card, .accent-card { padding: 20px; }
+    .mini-card h3, .accent-card h3 { margin: 0 0 10px; font-size: 19px; letter-spacing: -.02em; }
+    .mini-card p, .mini-card li, .accent-card p, .accent-card li { margin: 0; color: var(--navy); }
+    .mini-card ul, .accent-card ul { margin: 10px 0 0; padding-left: 18px; }
+    .mini-card.subtle { background: linear-gradient(180deg, #fff, #fbfbfc); }
+    .accent-card.brand { background: linear-gradient(180deg, var(--brand-soft), #fff); border: 1px solid #f0c7cb; }
+    .accent-card.gold { background: linear-gradient(180deg, var(--gold-soft), #fff); border: 1px solid #f2e3b0; }
+    .accent-card.green { background: linear-gradient(180deg, var(--green-soft), #fff); border: 1px solid #cde9dd; }
+
+    .concept-band {
+      margin: 24px 0 22px; padding: 26px; border-radius: 24px; color: #fff;
+      background: linear-gradient(120deg, #192034 0%, #283556 48%, #1a2238 100%);
+      display: grid; grid-template-columns: 1.08fr .92fr; gap: 22px; align-items: center;
+    }
+    .concept-band h3 { margin: 0 0 12px; font-size: 31px; line-height: 1; letter-spacing: -.045em; }
+    .concept-band p { margin: 0; max-width: 56ch; color: rgba(255,255,255,.86); }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .pill-row span { padding: 9px 12px; border-radius: 999px; font-size: 13px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.08); }
+
+    .diagram-frame { margin: 22px 0; padding: 18px; border-radius: 18px; border: 1px solid var(--line); background: linear-gradient(180deg, #fff, #f9fafb); box-shadow: var(--shadow); }
+    .diagram-note { margin-top: 12px; font-size: 13px; color: var(--muted); }
+
+    .panel-tools { display: flex; justify-content: flex-end; gap: 10px; margin: -6px 0 18px; }
+    .tiny-btn {
+      border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+      border-radius: 999px; padding: 8px 12px; font-size: 12px; cursor: pointer;
+    }
+    .tiny-btn:hover { color: var(--text); background: var(--surface-2); }
+
+    .accordion-group { display: grid; gap: 14px; }
+    .accordion-item { overflow: hidden; }
+    .accordion-trigger {
+      width: 100%; background: transparent; border: none; cursor: pointer; text-align: left;
+      padding: 20px 22px; display: flex; justify-content: space-between; align-items: center; gap: 18px;
+    }
+    .accordion-trigger:hover, .accordion-trigger:focus-visible { background: var(--surface-2); outline: none; }
+    .accordion-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .accordion-step {
+      width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: 0 0 auto;
+      font-weight: 800; color: var(--brand); background: linear-gradient(180deg, rgba(212,5,17,.12), rgba(212,5,17,.05));
+    }
+    .accordion-copy strong { display: block; font-size: 21px; letter-spacing: -.03em; margin-bottom: 4px; }
+    .accordion-copy span { display: block; color: var(--muted); font-size: 14px; max-width: 72ch; }
+    .accordion-icon {
+      width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; flex: 0 0 auto;
+      background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); font-size: 20px; transition: transform .18s ease;
+    }
+    .accordion-item.open .accordion-icon { transform: rotate(45deg); color: var(--brand); }
+    .accordion-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .25s ease; }
+    .accordion-item.open .accordion-content { grid-template-rows: 1fr; }
+    .accordion-inner { overflow: hidden; }
+    .accordion-pad { padding: 0 22px 22px; border-top: 1px solid var(--line); }
+
+    .content-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 20px; margin-top: 18px; }
+    .narrative, .detail {
+      border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); padding: 18px;
+    }
+    .narrative h4, .detail h4 { margin: 0 0 10px; font-size: 16px; letter-spacing: -.02em; }
+    .narrative p, .narrative li, .detail p, .detail li { color: var(--navy); margin: 0; }
+    .narrative ul, .detail ul { margin: 10px 0 0; padding-left: 18px; }
+    .callout {
+      margin-top: 14px; padding: 14px 16px; border-radius: 14px; background: linear-gradient(180deg, #fffef6, #fff);
+      border: 1px solid #f0e4b0; color: var(--navy); font-size: 14px;
+    }
+    .callout strong { color: #7a5800; }
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; margin-top: 14px; }
+    .two-col > div { border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 14px; }
+    .two-col strong { display: block; margin-bottom: 8px; font-size: 14px; }
+    .outcome-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .outcome-strip span {
+      padding: 9px 12px; border-radius: 999px; font-size: 13px; font-weight: 800;
+      color: var(--green); background: rgba(15,138,95,.08); border: 1px solid rgba(15,138,95,.16);
+    }
+
+    .table-wrap { padding: 18px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 13px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    td { color: var(--navy); }
+
+    .footer-note { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    .source-list { margin: 10px 0 0; padding-left: 18px; }
+    .source-list li { margin-bottom: 6px; }
+    .source-list a { color: var(--brand); text-decoration: none; }
+    .source-list a:hover { text-decoration: underline; }
+
+    @media (max-width: 1120px) {
+      .hero-grid, .section-head, .concept-band, .grid-4, .grid-3, .grid-2, .architecture-grid, .content-grid, .action-grid, .two-col { grid-template-columns: 1fr; }
+      .head-note { max-width: none; min-width: unset; }
+    }
+    @media (max-width: 760px) {
+      .shell, .topbar-inner { padding-left: 16px; padding-right: 16px; }
+      .hero-card, .panel, .takeaway-box { padding: 22px; }
+      .accordion-trigger, .accordion-pad { padding-left: 16px; padding-right: 16px; }
+      .hero-card h1 { max-width: none; }
+      .stat-grid { grid-template-columns: 1fr; }
+      .section-head h2 { font-size: 31px; }
+      .accordion-copy strong { font-size: 19px; }
+      .panel-tools { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-lockup">
+        <div class="brand-badge">RC</div>
+        <div>
+          <div class="eyebrow">Reshape Consulting</div>
+          <div class="brand-title">DHL Growth & Customer Intelligence Blueprint</div>
+          <div class="brand-subtitle">How CleverTap can anchor anonymous demand capture, paid media activation and LINE-led customer intelligence</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="chip primary">Final team review version</span>
+        <button class="chip" type="button" data-jump-tab="architecture">Open architecture view</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="eyebrow">Executive summary</div>
+          <h1>Turn anonymous demand into known, reachable customer journeys.</h1>
+          <p>DHL's opportunity is not only acquiring more users. It is converting and understanding the users it already has. The missing piece is a customer logic layer that can start learning before login, preserve context across channels, and turn later identity moments into better media efficiency, better service journeys and a stronger path toward loyalty.</p>
+        </div>
+        <aside class="hero-side">
+          <div class="stat-grid">
+            <div class="stat"><strong>50K</strong><span>LINE subscribers already in place</span></div>
+            <div class="stat"><strong>5K</strong><span>Monthly app users, a smaller but important owned surface</span></div>
+            <div class="stat"><strong>3</strong><span>Growth and service channels to coordinate: Google, Meta and LINE</span></div>
+            <div class="stat"><strong>1</strong><span>Central decisioning layer needed to connect them coherently</span></div>
+          </div>
+          <div class="takeaway-box">
+            <strong>What this page is designed to do</strong>
+            <p>Help DHL's marketing, product and service teams align on a practical direction for anonymous-user growth, profile enrichment, service-linked engagement and channel strategy, while showing why CleverTap is the most strategic center of gravity for that model.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="quick-nav">
+      <div class="tablist" role="tablist" aria-label="Section navigation">
+        <button class="tab-button active" type="button" role="tab" aria-selected="true" aria-controls="overview-panel" data-tab="overview">Overview</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="facebook-panel" data-tab="facebook">Facebook</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="google-panel" data-tab="google">Google</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="line-panel" data-tab="line">LINE</button>
+        <button class="tab-button" type="button" role="tab" aria-selected="false" aria-controls="architecture-panel" data-tab="architecture">Architecture</button>
+      </div>
+    </div>
+
+    <section class="panel active" id="overview-panel" data-panel="overview" role="tabpanel">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Overview</div>
+          <h2>Why CleverTap is strategically relevant for DHL</h2>
+          <p>DHL does not need another disconnected tool. It needs a way to capture intent before identity is known, preserve context when identity appears, and coordinate paid media, owned channels and service journeys from one customer logic layer. CleverTap is most compelling when positioned as that operating brain.</p>
+        </div>
+        <div class="head-note">
+          <strong>Core idea</strong>
+          Anonymous traffic is not wasted traffic. The commercial opportunity is to interpret intent early, enrich identity progressively and activate the right next move when the customer becomes reachable.
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <div class="mini-card subtle"><h3>Anonymous demand is meaningful</h3><p>Visitors browse rates, track shipments, review support content and explore pickup services without always logging in or filling a form.</p></div>
+        <div class="mini-card subtle"><h3>Paid media learns in fragments</h3><p>Google and Meta each optimize inside their own ecosystems, but neither understands DHL's full commercial and service context on its own.</p></div>
+        <div class="mini-card subtle"><h3>LINE is under-used as a data asset</h3><p>It already captures customer attention, yet in most organizations it still behaves like a support inbox rather than a structured profile-enrichment channel.</p></div>
+        <div class="mini-card subtle"><h3>Identity appears late</h3><p>The most valuable moment is often not first visit. It is the moment DHL can finally connect the earlier journey to a known customer or shipment context.</p></div>
+      </div>
+
+      <section class="concept-band">
+        <div>
+          <div class="eyebrow" style="color:#ffd86d">The strategic shift</div>
+          <h3>From channel execution to customer decisioning</h3>
+          <p>Google and Meta remain acquisition and optimization engines. LINE becomes DHL's earliest practical point of identity capture and structured engagement in Thailand. CleverTap becomes the customer memory and action layer that interprets intent, stores business context and triggers more intelligent follow-up across all three.</p>
+          <div class="pill-row">
+            <span>Start learning before login</span>
+            <span>Upgrade from anonymous to known</span>
+            <span>Use service interactions to enrich marketing context</span>
+            <span>Build toward loyalty without re-platforming later</span>
+          </div>
+        </div>
+        <div class="diagram-frame" style="margin:0; background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.12)">
+          <img src="assets/overview-brain.svg" alt="Diagram showing CleverTap as the central brain between website, paid media, LINE and future loyalty" />
+        </div>
+      </section>
+
+      <div class="action-grid">
+        <div class="accent-card brand">
+          <h3>What DHL gains</h3>
+          <ul>
+            <li>Earlier visibility into intent before identity is known</li>
+            <li>Cleaner handoff between acquisition, service and lifecycle teams</li>
+            <li>A practical bridge from current-state channels to future loyalty use cases</li>
+          </ul>
+        </div>
+        <div class="accent-card gold">
+          <h3>Why this favors CleverTap</h3>
+          <ul>
+            <li>It captures and stores owned-channel behavior directly</li>
+            <li>It combines segmentation, journeys and audience activation in one layer</li>
+            <li>It gives DHL a profile model that can keep getting richer over time</li>
+          </ul>
+        </div>
+        <div class="accent-card green">
+          <h3>Where to start</h3>
+          <ul>
+            <li>Instrument high-intent anonymous behavior on web and app</li>
+            <li>Use Google and Meta where they are natively strongest</li>
+            <li>Use LINE as the fastest route to structured identity enrichment in Thailand</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel-tools">
+        <button class="tiny-btn" type="button" data-expand-panel="overview">Expand all</button>
+        <button class="tiny-btn" type="button" data-collapse-panel="overview">Collapse all</button>
+      </div>
+
+      <div class="accordion-group">
+        <section class="accordion-item open">
+          <button class="accordion-trigger" type="button" aria-expanded="true">
+            <div class="accordion-left">
+              <div class="accordion-step">1</div>
+              <div class="accordion-copy">
+                <strong>What DHL should capture before a user is known</strong>
+                <span>The immediate goal is not full identity. It is meaningful intent that can later be attached to a profile and turned into action.</span>
+              </div>
+            </div>
+            <div class="accordion-icon">+</div>
+          </button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad">
+            <div class="content-grid">
+              <div class="narrative">
+                <h4>Business interpretation</h4>
+                <p>Pricing-page depth, repeat rate checks, tracking-page frequency, service-help browsing, pickup scheduling starts and missed-delivery content consumption all signal what kind of follow-up DHL should eventually deliver. These are not just analytics events. They are early commercial signals.</p>
+                <div class="callout"><strong>Implication:</strong> anonymous data becomes strategic when DHL preserves it long enough to attach it to a customer, a shipment or a service issue later.</div>
+              </div>
+              <div class="detail">
+                <h4>High-priority events to track</h4>
+                <ul>
+                  <li>Rate checker opened and abandoned</li>
+                  <li>Shipment tracking page viewed repeatedly</li>
+                  <li>Pickup scheduling entered but not completed</li>
+                  <li>Missed-delivery or support content viewed</li>
+                  <li>Repeated country, service or shipment preferences inferred from behavior</li>
+                </ul>
+              </div>
+            </div>
+          </div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false">
+            <div class="accordion-left">
+              <div class="accordion-step">2</div>
+              <div class="accordion-copy">
+                <strong>What changes when identity appears</strong>
+                <span>The goal is to upgrade the earlier journey, not start from zero at login, lead form or service interaction.</span>
+              </div>
+            </div>
+            <div class="accordion-icon">+</div>
+          </button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad">
+            <div class="content-grid">
+              <div class="narrative">
+                <h4>Identity moments DHL can exploit</h4>
+                <p>When a user logs in, submits a lead form, schedules pickup, enters a tracking number through LIFF, confirms a phone number, or contacts support with shipment context, DHL should be able to connect that moment to what happened before. That is where generic messaging turns into informed engagement.</p>
+                <div class="two-col">
+                  <div><strong>Useful profile-upgrade inputs</strong>Email, phone number, internal customer number, LINE UID, tracking or shipment reference, Google click identifiers, Meta event identifiers.</div>
+                  <div><strong>Commercial payoff</strong>Better audience quality, stronger conversion signals, more relevant service updates, and a cleaner path toward future loyalty enrollment.</div>
+                </div>
+              </div>
+              <div class="detail">
+                <h4>Why this matters commercially</h4>
+                <ul>
+                  <li>Paid media receives better conversion and audience signals</li>
+                  <li>DHL can personalize service follow-up, not just promotions</li>
+                  <li>Behavior from web, app and LINE can converge into one richer profile</li>
+                  <li>The same profile foundation can later support retention and loyalty logic</li>
+                </ul>
+              </div>
+            </div>
+          </div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false">
+            <div class="accordion-left">
+              <div class="accordion-step">3</div>
+              <div class="accordion-copy">
+                <strong>Why CleverTap is a better anchor than a traditional CDP-led story</strong>
+                <span>The strongest argument is not data plumbing. It is speed to action, owned-channel memory and future readiness for loyalty.</span>
+              </div>
+            </div>
+            <div class="accordion-icon">+</div>
+          </button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad">
+            <div class="grid-3">
+              <div class="mini-card subtle"><h3>Traditional CDP posture</h3><ul><li>Collect data from many systems</li><li>Route data into downstream tools</li><li>Focus on identity and orchestration layers</li></ul></div>
+              <div class="mini-card subtle"><h3>CleverTap posture</h3><ul><li>Capture behavior directly on owned surfaces</li><li>Interpret intent in near real time</li><li>Activate journeys and audience sync from the same layer</li></ul></div>
+              <div class="mini-card subtle"><h3>Why that matters for DHL</h3><ul><li>DHL needs action and service-linked logic, not just cleaner pipes</li><li>Service interactions can feed lifecycle marketing</li><li>The platform can later expand naturally into loyalty strategy</li></ul></div>
+            </div>
+          </div></div></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel" id="facebook-panel" data-panel="facebook" role="tabpanel">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Facebook / Meta</div>
+          <h2>Make Meta more useful by giving it better audience and event intelligence</h2>
+          <p>Meta already provides strong reach, retargeting and optimization. The issue is that website activity is often only partially visible, and anonymous service intent is hard to translate into structured re-engagement. Without CleverTap, Meta relies on fragmented signals. CleverTap helps by deciding which behavior pockets are worth treating differently, then activating those cohorts and, where justified, feeding stronger event logic into Meta.</p>
+        </div>
+        <div class="head-note">
+          <strong>Simple view</strong>
+          Pixel tells Meta that something happened. CleverTap tells Meta which users matter. An advanced path can then tell Meta which commercial outcomes deserve more weight.
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="mini-card subtle"><h3>As-is today</h3><p>Meta Pixel captures site events, subject to consent and browser restrictions. Meta can retarget and optimize, but anonymous intent often remains weakly matched.</p></div>
+        <div class="mini-card subtle"><h3>With CleverTap out of the box</h3><p>CleverTap segments users by behavior and syncs those segments to Meta as Custom Audiences, improving re-engagement quality and reducing wasted spend.</p></div>
+        <div class="mini-card subtle"><h3>Advanced path</h3><p>Meta Conversions API can strengthen optimization and attribution when DHL wants richer event signal and stronger identified-user feedback loops.</p></div>
+      </div>
+
+      <div class="diagram-frame">
+        <img src="assets/facebook-flow.svg" alt="Diagram showing Meta current state, CleverTap audience sync and advanced CAPI path" />
+        <div class="diagram-note">Recommended interpretation: start with audience sync first. Add stronger event signal only where the value of better optimization or attribution clearly justifies the extra integration design.</div>
+      </div>
+
+      <div class="panel-tools">
+        <button class="tiny-btn" type="button" data-expand-panel="facebook">Expand all</button>
+        <button class="tiny-btn" type="button" data-collapse-panel="facebook">Collapse all</button>
+      </div>
+
+      <div class="accordion-group">
+        <section class="accordion-item open">
+          <button class="accordion-trigger" type="button" aria-expanded="true"><div class="accordion-left"><div class="accordion-step">A</div><div class="accordion-copy"><strong>How Meta works today without CleverTap</strong><span>Meta Pixel captures website events and Meta attempts matching for reporting, retargeting and optimization.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>What this means in practice</h4><p>Meta can see part of the customer journey, but not DHL's full business context. Signal quality varies materially with consent, cookie availability, browser restrictions and whether the user can be matched back to a Facebook or Instagram identity.</p><div class="outcome-strip"><span>Useful for retargeting</span><span>Useful for optimization</span><span>Weaker when identity is incomplete</span></div></div>
+            <div class="detail"><h4>Key limitations</h4><ul><li>Anonymous visitors often remain weakly matched</li><li>Service-related intent, such as repeated tracking or reschedule interest, is hard to convert into audience strategy on its own</li><li>Meta sees events but not necessarily DHL's full commercial and operational context</li><li>Signal quality degrades further when marketing consent is denied</li></ul></div>
+          </div></div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false"><div class="accordion-left"><div class="accordion-step">B</div><div class="accordion-copy"><strong>What CleverTap adds out of the box</strong><span>Behavioral segmentation and direct audience export into Meta's remarketing environment.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>High-value DHL cohorts</h4><ul><li>Repeat rate-check visitors with no pickup booking</li><li>Users with repeated tracking behavior and no account login</li><li>High-intent service page viewers</li><li>Users whose behavior suggests business-shipping interest</li></ul><div class="callout"><strong>Commercial effect:</strong> instead of asking Meta to infer everything, DHL can tell Meta which audience pockets are commercially worth re-engaging.</div></div>
+            <div class="detail"><h4>Why this is the best first move</h4><ul><li>Fastest route to visible value using native CleverTap capabilities</li><li>Clear story for marketers: better audience quality, better re-engagement, less spend leakage</li><li>Keeps CleverTap central without forcing DHL into a large integration build immediately</li></ul><div class="outcome-strip"><span>Sharper retargeting</span><span>Better audience quality</span><span>Cleaner activation logic</span></div></div>
+          </div></div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false"><div class="accordion-left"><div class="accordion-step">C</div><div class="accordion-copy"><strong>What advanced integration can unlock</strong><span>Meta Conversions API complements pixel-based measurement with stronger event feedback when DHL wants to go further.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>Recommended positioning</h4><p>The right story is not that CleverTap replaces Meta tracking. It is that CleverTap becomes the event-intelligence layer deciding which behaviors and outcomes should feed Meta more clearly. That can be implemented through a custom integration path where DHL wants stronger measurement and optimization.</p><div class="two-col"><div><strong>For anonymous users</strong>Early website behavior can still be tracked and scored, but match quality remains naturally lower until stronger identifiers appear.</div><div><strong>For identified users</strong>Once email, phone or other identifiers become available, event quality and match quality improve materially.</div></div></div>
+            <div class="detail"><h4>When to deploy this</h4><ul><li>When better attribution or bidding quality matters enough to justify the extra design effort</li><li>When DHL wants a more explicit feedback loop from service or conversion milestones into Meta</li><li>When privacy gating and event governance have been defined clearly</li></ul><div class="callout"><strong>Best use:</strong> keep this as a second-wave enhancement after native audience sync is live and producing value.</div></div>
+          </div></div></div></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel" id="google-panel" data-panel="google" role="tabpanel">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Google</div>
+          <h2>Let Google own anonymous scale. Let CleverTap own behavior, progression and business context.</h2>
+          <p>Google is natively stronger than Meta for anonymous acquisition and modeled measurement because it controls more of the ad and tagging stack. CleverTap should not be framed as replacing that. CleverTap does not replace Google's anonymous tracking layer. Its role is to make Google more commercially useful by adding behavioral intelligence, identified-user activation, and later-stage outcome linkage once DHL knows more about the customer.</p>
+        </div>
+        <div class="head-note">
+          <strong>Simple view</strong>
+          Google remains the anonymous media and measurement substrate. CleverTap becomes the layer that decides which known users deserve differentiated treatment once identity and business context appear.
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="mini-card subtle"><h3>As-is today</h3><p>Google tags and Google Ads can already support anonymous audience building, remarketing and modeled measurement through Google's own ecosystem.</p></div>
+        <div class="mini-card subtle"><h3>With CleverTap out of the box</h3><p>CleverTap's native Google Ads integration is best viewed as identified-user audience activation, not anonymous website-visitor export.</p></div>
+        <div class="mini-card subtle"><h3>Advanced path</h3><p>Enhanced Conversions and offline conversion imports help connect ad clicks to later online or offline value, which is especially relevant for DHL's service-heavy journeys.</p></div>
+      </div>
+
+      <div class="diagram-frame">
+        <img src="assets/google-flow.svg" alt="Diagram showing Google current state, CleverTap identified-user activation and advanced enhanced-conversion path" />
+        <div class="diagram-note">Recommended interpretation: Google keeps anonymous acquisition native. CleverTap becomes most valuable after identity appears, and even more valuable when DHL wants to close the loop on later-stage outcomes.</div>
+      </div>
+
+      <div class="panel-tools">
+        <button class="tiny-btn" type="button" data-expand-panel="google">Expand all</button>
+        <button class="tiny-btn" type="button" data-collapse-panel="google">Collapse all</button>
+      </div>
+
+      <div class="accordion-group">
+        <section class="accordion-item open">
+          <button class="accordion-trigger" type="button" aria-expanded="true"><div class="accordion-left"><div class="accordion-step">A</div><div class="accordion-copy"><strong>How Google works today without CleverTap</strong><span>Google already handles anonymous website-visitor remarketing and modeled measurement through Google's own tagging and ads stack.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>What this means in practice</h4><p>Google can often learn more gracefully from anonymous demand than other platforms because it controls the advertising, tagging and measurement environment more directly. In business terms, it is already well equipped to learn from anonymous interest on DHL's website.</p><div class="outcome-strip"><span>Strong for anonymous acquisition</span><span>Strong for modeled measurement</span><span>Still weaker on DHL-specific business context</span></div></div>
+            <div class="detail"><h4>Important limitation to keep straight</h4><ul><li>Google's own website-visitor audiences are not the same thing as CleverTap audience export</li><li>CleverTap's native Google integration depends on known-user audience upload logic</li><li>A plain CleverTap anonymous ID is not, by itself, a standard Google Ads audience-matching key</li></ul></div>
+          </div></div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false"><div class="accordion-left"><div class="accordion-step">B</div><div class="accordion-copy"><strong>What CleverTap adds out of the box</strong><span>CleverTap helps DHL operationalize behavior and profile logic once users become known enough to match or activate.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>The clean way to explain this</h4><p>CleverTap can segment users based on behavior and profile data, then upload eligible users into Google Ads audience lists once DHL has enough known identifiers to support Google matching. That makes CleverTap strategically valuable after identity appears, even though Google still owns anonymous remarketing natively.</p><div class="two-col"><div><strong>Best out-of-the-box use cases</strong>Reactivate dormant known users, re-engage service-related cohorts, and target business-shipping prospects who have become identifiable.</div><div><strong>Best strategic framing</strong>Google handles anonymous scale. CleverTap handles who is worth treating differently once DHL knows enough about them.</div></div></div>
+            <div class="detail"><h4>Why this is still a strong CleverTap story</h4><ul><li>It gives marketing a clean activation layer for higher-value known users</li><li>It links audience strategy to owned-channel behavior, not just ad-platform rules</li><li>It fits a broader roadmap where the same profile model later powers journeys and loyalty logic</li></ul></div>
+          </div></div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false"><div class="accordion-left"><div class="accordion-step">C</div><div class="accordion-copy"><strong>What advanced integration can unlock</strong><span>Google's enhanced conversion and offline import capabilities help DHL connect paid acquisition to real shipment, service and revenue outcomes.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>Where DHL can win most</h4><p>DHL often operates journeys where the first online interaction is not the final value moment. A user may click an ad, check rates, submit a request, contact support, complete later via call center or branch, or return after operational updates. Google's enhanced conversion framework is built for this kind of reality.</p><ul><li><strong>Enhanced Conversions for web:</strong> better online measurement when DHL has first-party data at conversion time</li><li><strong>Enhanced Conversions for leads:</strong> particularly relevant when lead capture and offline follow-up matter</li><li><strong>Offline conversion imports:</strong> links later commercial outcomes back to the original ad interaction</li></ul></div>
+            <div class="detail"><h4>Recommended architecture logic</h4><ul><li>Keep Google responsible for anonymous acquisition and website-visitor remarketing</li><li>Use CleverTap to own behavior scoring and profile enrichment on owned channels</li><li>Use advanced Google conversion integrations to close the loop on later-stage outcomes once DHL has stronger identifiers or conversion data</li></ul><div class="callout"><strong>Practical takeaway:</strong> the premium story for DHL is not only better targeting. It is a stronger ability to connect paid acquisition to actual commercial outcomes.</div></div>
+          </div></div></div></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel" id="line-panel" data-panel="line" role="tabpanel">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">LINE</div>
+          <h2>The highest-upside channel for DHL in Thailand</h2>
+          <p>LINE is where DHL can build the most distinctive story. It is not just a messaging channel. It can become an identity bridge, a structured service interface, a profile-enrichment surface and, with the right architecture, a source of support intelligence. CleverTap becomes most powerful here when it sits behind the experience as the customer memory and activation layer.</p>
+        </div>
+        <div class="head-note">
+          <strong>Simple view</strong>
+          Today, LINE behaves mainly as a conversation endpoint. With CleverTap, LIFF and a phased architecture, it can become a true customer-intelligence and engagement operating channel.
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="mini-card subtle"><h3>As-is today</h3><p>LINE Official Account provides reach and customer contact, but service context, website behavior and future marketing value often remain disconnected.</p></div>
+        <div class="mini-card subtle"><h3>With CleverTap + LIFF</h3><p>CleverTap can support outbound messaging once LINE ID is on profile, while LIFF creates a practical no-heavy-middleware route for structured intent capture.</p></div>
+        <div class="mini-card subtle"><h3>With smart bot-server support</h3><p>Inbound message understanding, shipment-context enrichment, agent assist and workflow triggers become possible once DHL is ready for a richer two-way model.</p></div>
+      </div>
+
+      <div class="diagram-frame">
+        <img src="assets/line-flow.svg" alt="Diagram showing LINE current state, LIFF-based progression and future smart-bot model" />
+        <div class="diagram-note">Recommended interpretation: do not wait for a full conversational AI program to start. LIFF already gives DHL a practical path to structured identity and intent capture with CleverTap at the center.</div>
+      </div>
+
+      <div class="panel-tools">
+        <button class="tiny-btn" type="button" data-expand-panel="line">Expand all</button>
+        <button class="tiny-btn" type="button" data-collapse-panel="line">Collapse all</button>
+      </div>
+
+      <div class="accordion-group">
+        <section class="accordion-item open">
+          <button class="accordion-trigger" type="button" aria-expanded="true"><div class="accordion-left"><div class="accordion-step">A</div><div class="accordion-copy"><strong>How LINE works today without CleverTap</strong><span>LINE Official Account already offers reach and customer contact, but profile and commercial context usually remain fragmented.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>The practical reality</h4><p>DHL users already message LINE OA for tracking status, pickup timing, rescheduling and missed-delivery questions. This is valuable intent, but unless it connects to a profile model it often stays trapped inside the messaging channel.</p><div class="two-col"><div><strong>What LINE already has</strong>A LINE user ID, messaging capabilities, rich menus and mini-app experiences that can gather structured input.</div><div><strong>What is usually missing</strong>A persistent customer model that ties LINE activity to web, app, shipment context and lifecycle messaging.</div></div></div>
+            <div class="detail"><h4>Key concepts to keep straight</h4><ul><li><strong>LINE user ID:</strong> the identifier used in Messaging API contexts</li><li><strong>LINE Login:</strong> the authentication path that can help connect LINE identity to DHL's own surfaces</li><li><strong>LIFF:</strong> a mini web-app framework inside LINE that is ideal for structured interactions</li></ul></div>
+          </div></div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false"><div class="accordion-left"><div class="accordion-step">B</div><div class="accordion-copy"><strong>What CleverTap adds out of the box</strong><span>Targeted outbound LINE activation once DHL has stored the user's LINE ID on the CleverTap profile.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>Why this already matters</h4><p>Even before any advanced build, CleverTap helps DHL move from broad LINE messaging to more selective activation. Once LINE ID is on profile, CleverTap can target communication based on lifecycle state, behavior and service context already known to DHL.</p><div class="outcome-strip"><span>Targeted outbound messaging</span><span>More relevant service journeys</span><span>Bridge into broader lifecycle marketing</span></div></div>
+            <div class="detail"><h4>What this does not do by itself</h4><ul><li>It does not automatically ingest free-text LINE chat into CleverTap</li><li>It does not by itself create an agent-assist console</li><li>It does not unify multiple LINE OAs unless DHL defines a profile-linking strategy</li></ul><div class="callout"><strong>Correct expectation:</strong> out-of-the-box CleverTap + LINE is best understood as targeted outbound activation once identity is already linked.</div></div>
+          </div></div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false"><div class="accordion-left"><div class="accordion-step">C</div><div class="accordion-copy"><strong>How DHL can capture more value without a heavy middleware layer</strong><span>LIFF and LINE Login create a practical route for structured data capture and profile enrichment without starting with a full conversational platform.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>The strongest near-term move</h4><p>Use LINE not only as a chat surface, but as a launch point into LIFF-based service flows. That lets DHL capture intent, shipment context and identity moments in a controlled way, then feed those events into CleverTap through LIFF-side instrumentation or light API logic.</p><ul><li>Track package flow inside LIFF</li><li>Missed-delivery reschedule flow inside LIFF</li><li>Pickup request or callback request inside LIFF</li><li>Progressive identity capture using LINE Login or form-based enrichment</li></ul></div>
+            <div class="detail"><h4>What CleverTap can capture in this model</h4><ul><li>Which service flow was opened</li><li>Which tracking or shipment reference was entered</li><li>Whether the user completed, abandoned or repeated the action</li><li>Whether the same profile later became known through email, phone or login</li></ul><div class="callout"><strong>Practical benefit:</strong> this is the fastest path to connect LINE-originated service behavior to a broader customer profile without first building a full middleware stack.</div></div>
+          </div></div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false"><div class="accordion-left"><div class="accordion-step">D</div><div class="accordion-copy"><strong>How the game changes with a smart bot server</strong><span>A lightweight bot-server layer turns LINE from a structured entry point into a true two-way service and intelligence channel.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>What becomes possible</h4><p>Once DHL is willing to add a smart bot-server layer, inbound messages can be interpreted, contextualized and routed. That means LINE activity can directly enrich CleverTap, trigger operational workflows and surface relevant context to support staff before they respond.</p><div class="two-col"><div><strong>Marketing and lifecycle value</strong>Service questions can become triggers for reassurance journeys, operational updates or win-back logic once the issue is resolved.</div><div><strong>Support value</strong>Reps can see recent website or app behavior, repeated tracking checks, prior service actions or high-value customer signals before replying.</div></div></div>
+            <div class="detail"><h4>Representative capabilities</h4><ul><li>Read inbound LINE chat events and classify intent</li><li>Fetch shipment status or scheduling context</li><li>Push structured events and profile updates to CleverTap</li><li>Trigger outbound messaging and workflow follow-up</li><li>Enable future agent-assist experiences if DHL wants them</li></ul></div>
+          </div></div></div></div>
+        </section>
+
+        <section class="accordion-item">
+          <button class="accordion-trigger" type="button" aria-expanded="false"><div class="accordion-left"><div class="accordion-step">E</div><div class="accordion-copy"><strong>What to do if DHL has multiple LINE Official Accounts</strong><span>Multiple OAs can create fragmented identity unless DHL chooses a profile-stitching approach early.</span></div></div><div class="accordion-icon">+</div></button>
+          <div class="accordion-content"><div class="accordion-inner"><div class="accordion-pad"><div class="content-grid">
+            <div class="narrative"><h4>Without middleware</h4><p>DHL can still move forward, but should treat each OA as a distinct channel until the user provides a shared identifier such as email, phone or a DHL account ID. CleverTap can then unify later once that common identifier appears.</p><h4 style="margin-top:16px">With middleware</h4><p>A central linking layer can stitch identities across OAs more deliberately, maintain a shared customer model and route each conversation to the right business function while preserving one richer profile behind the scenes.</p></div>
+            <div class="detail"><h4>Recommended governance choice</h4><ul><li>Decide whether DHL wants one strategic OA or several operational OAs</li><li>Define which identifiers will be treated as trusted profile-linking keys</li><li>Keep CleverTap as the central profile layer regardless of channel count</li></ul><div class="callout"><strong>Why this matters:</strong> if LINE becomes a major growth and service channel, the identity model should be designed intentionally, not patched later.</div></div>
+          </div></div></div></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="panel" id="architecture-panel" data-panel="architecture" role="tabpanel">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Architecture</div>
+          <h2>Recommended operating model</h2>
+          <p>The strongest design is deliberately pragmatic. Start by instrumenting owned surfaces, activating the cleanest native integrations, and using LINE for structured enrichment. Add richer conversion loops and conversational intelligence only when the first layer is already producing value.</p>
+        </div>
+        <div class="head-note">
+          <strong>Design principle</strong>
+          Keep Google and Meta native where they are strongest. Use CleverTap as the customer logic layer across them. Use LINE as DHL's richest route to service-linked profile growth in Thailand.
+        </div>
+      </div>
+
+      <div class="architecture-grid">
+        <div>
+          <div class="diagram-frame" style="margin-top:0">
+            <img src="assets/architecture-overview.svg" alt="Architecture overview showing website, LINE, Google, Meta and optional bot server around CleverTap" />
+            <div class="diagram-note">This operating model preserves flexibility. DHL can start without heavy middleware, then add richer two-way service intelligence later without changing the central role of CleverTap.</div><div class="callout" style="margin-top:14px"><strong>Implementation scope note:</strong> optional layers such as middleware, smart bot-server logic, inbound LINE processing, and real-time operational integrations are not assumed in the base CleverTap setup. They can be assessed later if DHL wants a more advanced operating model.</div>
+          </div>
+
+          <div class="grid-2">
+            <div class="mini-card subtle"><h3>Priority phase 1</h3><ul><li>Capture high-intent anonymous behavior on website and app</li><li>Launch CleverTap audience sync to Meta</li><li>Use LIFF for structured LINE service flows and profile enrichment</li></ul></div>
+            <div class="mini-card subtle"><h3>Priority phase 2</h3><ul><li>Add stronger Google outcome linkage where offline value matters</li><li>Add advanced Meta event signal selectively</li><li>Introduce a bot-server layer when service intelligence becomes a priority</li></ul></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="grid-2">
+            <div class="mini-card subtle"><h3>CleverTap</h3><ul><li>Owned-channel behavior capture</li><li>Profile memory and segmentation</li><li>Journeys, activation and future loyalty logic</li></ul></div>
+            <div class="mini-card subtle"><h3>Google</h3><ul><li>Anonymous acquisition and remarketing infrastructure</li><li>Consent-aware measurement and conversion modeling</li><li>Enhanced-conversion and offline-attribution endpoints</li></ul></div>
+            <div class="mini-card subtle"><h3>Meta</h3><ul><li>Paid social reach and retargeting</li><li>Audience activation through CleverTap sync</li><li>Optional stronger event signal via CAPI</li></ul></div>
+            <div class="mini-card subtle"><h3>LINE</h3><ul><li>High-value customer engagement surface</li><li>Identity bridge via LINE Login and LIFF</li><li>Potential future service-intelligence channel</li></ul></div>
+          </div>
+
+          <div class="table-wrap" style="margin-top:16px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Capability</th>
+                  <th>Primary owner</th>
+                  <th>Role of CleverTap</th>
+                  <th>Why it matters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Anonymous website and app behavior capture</td><td>DHL + CleverTap SDKs</td><td>Stores events and powers segmentation</td><td>Foundational first step for everything else</td></tr>
+                <tr><td>Google anonymous audience building</td><td>Google tag / Google Ads</td><td>Adds behavioral and business context once users become known</td><td>Best to let Google own this natively</td></tr>
+                <tr><td>Meta re-engagement</td><td>Meta + CleverTap</td><td>Defines which users matter through segments</td><td>Best immediate paid-media use case</td></tr>
+                <tr><td>Advanced Meta event signal</td><td>Custom integration</td><td>Acts as source of event logic and customer context</td><td>Add selectively after core foundation is live</td></tr>
+                <tr><td>Advanced Google outcome linkage</td><td>Custom integration</td><td>Connects behavior and profile progression to later-stage outcomes</td><td>Especially relevant for service-led and offline-led journeys</td></tr>
+                <tr><td>Basic LINE activation</td><td>LINE + CleverTap</td><td>Outbound targeting once LINE ID is on profile</td><td>Low-burden early move</td></tr>
+                <tr><td>Structured LINE enrichment via LIFF</td><td>DHL digital team</td><td>Captures intent and profile-enrichment events</td><td>Best no-heavy-middleware path</td></tr>
+                <tr><td>Conversational LINE intelligence</td><td>Bot server / middleware</td><td>Receives enriched event and profile updates</td><td>Future-state unlock for support and operations</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        <strong>Source basis</strong>
+        <p>This blueprint is a strategy document, not a final technical specification. It is grounded in current public documentation from CleverTap, Meta, Google Ads and LINE Developers. Final design choices should be confirmed during implementation and privacy review.</p><p style="margin-top:10px;color:#25324B"><strong>Final takeaway:</strong> this approach lets DHL start with immediate improvements in anonymous demand capture and channel activation, while building toward a more unified customer-intelligence and engagement model over time.</p>
+        <ul class="source-list">
+          <li><a href="https://docs.clevertap.com/docs/facebook-audiences" target="_blank" rel="noreferrer">CleverTap Facebook Audiences documentation</a></li>
+          <li><a href="https://docs.clevertap.com/docs/google-adwords-remarketing" target="_blank" rel="noreferrer">CleverTap Google Ads remarketing documentation</a></li>
+          <li><a href="https://docs.clevertap.com/docs/line-messenger" target="_blank" rel="noreferrer">CleverTap LINE Messenger documentation</a></li>
+          <li><a href="https://docs.clevertap.com/docs/user-profiles" target="_blank" rel="noreferrer">CleverTap user profile documentation</a></li>
+          <li><a href="https://developers.facebook.com/docs/marketing-api/conversions-api/" target="_blank" rel="noreferrer">Meta Conversions API documentation</a></li>
+          <li><a href="https://developers.google.com/google-ads/api/docs/conversions/upload-online" target="_blank" rel="noreferrer">Google Ads enhanced conversions for web</a></li>
+          <li><a href="https://developers.google.com/google-ads/api/docs/conversions/upload-offline" target="_blank" rel="noreferrer">Google Ads offline conversions and enhanced conversions for leads</a></li>
+          <li><a href="https://developers.line.biz/en/docs/liff/overview/" target="_blank" rel="noreferrer">LINE LIFF overview</a></li>
+          <li><a href="https://developers.line.biz/en/docs/messaging-api/building-bot/" target="_blank" rel="noreferrer">LINE Messaging API and bot server overview</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll('.tab-button'));
+    const panels = Array.from(document.querySelectorAll('.panel'));
+
+    function setActiveTab(tabName, updateHash = true) {
+      tabs.forEach(btn => {
+        const active = btn.dataset.tab === tabName;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-selected', String(active));
+      });
+      panels.forEach(panel => panel.classList.toggle('active', panel.dataset.panel === tabName));
+      if (updateHash) history.replaceState(null, '', `#${tabName}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    tabs.forEach((btn, index) => {
+      btn.addEventListener('click', () => setActiveTab(btn.dataset.tab));
+      btn.addEventListener('keydown', e => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        const next = e.key === 'ArrowRight' ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
+        tabs[next].focus();
+        setActiveTab(tabs[next].dataset.tab);
+      });
+    });
+
+    document.querySelectorAll('[data-jump-tab]').forEach(el => {
+      el.addEventListener('click', () => setActiveTab(el.getAttribute('data-jump-tab')));
+    });
+
+    function setAccordion(item, open) {
+      item.classList.toggle('open', open);
+      const trigger = item.querySelector('.accordion-trigger');
+      if (trigger) trigger.setAttribute('aria-expanded', String(open));
+    }
+
+    document.querySelectorAll('.accordion-item').forEach(item => {
+      const trigger = item.querySelector('.accordion-trigger');
+      trigger.addEventListener('click', () => setAccordion(item, !item.classList.contains('open')));
+    });
+
+    document.querySelectorAll('[data-expand-panel]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panelName = btn.getAttribute('data-expand-panel');
+        document.querySelectorAll(`.panel[data-panel="${panelName}"] .accordion-item`).forEach(item => setAccordion(item, true));
+      });
+    });
+    document.querySelectorAll('[data-collapse-panel]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panelName = btn.getAttribute('data-collapse-panel');
+        document.querySelectorAll(`.panel[data-panel="${panelName}"] .accordion-item`).forEach((item, idx) => setAccordion(item, idx === 0));
+      });
+    });
+
+    const knownTabs = tabs.map(t => t.dataset.tab);
+    const initial = window.location.hash.replace('#', '');
+    if (knownTabs.includes(initial)) setActiveTab(initial, false);
+    window.addEventListener('hashchange', () => {
+      const target = window.location.hash.replace('#', '');
+      if (knownTabs.includes(target)) setActiveTab(target, false);
+    });
+  </script>
+</body>
+</html>
