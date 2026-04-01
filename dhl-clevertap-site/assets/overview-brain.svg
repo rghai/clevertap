@@ -1,54 +1,39 @@
 <svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="760" rx="28" fill="#F7F9FC"/>
-  <rect x="472" y="232" width="256" height="296" rx="28" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-  <rect x="500" y="258" width="200" height="46" rx="14" fill="#FFF2F3"/>
-  <text x="600" y="287" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#D40511">CleverTap</text>
-  <text x="600" y="322" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#475467">Central customer brain</text>
-
-  <rect x="517" y="360" width="166" height="44" rx="12" fill="#F7F9FC" stroke="#E6E8EC"/>
-  <text x="600" y="387" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#101828">Behavior memory</text>
-  <rect x="517" y="416" width="166" height="44" rx="12" fill="#F7F9FC" stroke="#E6E8EC"/>
-  <text x="600" y="443" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#101828">Segmentation</text>
-  <rect x="517" y="472" width="166" height="44" rx="12" fill="#F7F9FC" stroke="#E6E8EC"/>
-  <text x="600" y="499" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#101828">Activation</text>
-
-  <g>
-    <rect x="70" y="108" width="250" height="130" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="100" y="150" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">Website / App</text>
-    <text x="100" y="184" font-family="Arial, sans-serif" font-size="15" fill="#475467">Anonymous browsing</text>
-    <text x="100" y="209" font-family="Arial, sans-serif" font-size="15" fill="#475467">Pricing, tracking, service intent</text>
-  </g>
-
-  <g>
-    <rect x="878" y="108" width="250" height="130" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="908" y="150" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">Google / Meta</text>
-    <text x="908" y="184" font-family="Arial, sans-serif" font-size="15" fill="#475467">Acquisition and retargeting</text>
-    <text x="908" y="209" font-family="Arial, sans-serif" font-size="15" fill="#475467">Optimization and measurement</text>
-  </g>
-
-  <g>
-    <rect x="70" y="516" width="250" height="130" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="100" y="558" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">LINE</text>
-    <text x="100" y="592" font-family="Arial, sans-serif" font-size="15" fill="#475467">Identity, messaging, service</text>
-    <text x="100" y="617" font-family="Arial, sans-serif" font-size="15" fill="#475467">LIFF and structured flows</text>
-  </g>
-
-  <g>
-    <rect x="878" y="516" width="250" height="130" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="908" y="558" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">Loyalty / CRM</text>
-    <text x="908" y="592" font-family="Arial, sans-serif" font-size="15" fill="#475467">Retention and recurring use</text>
-    <text x="908" y="617" font-family="Arial, sans-serif" font-size="15" fill="#475467">Future-state expansion</text>
-  </g>
-
-  <path d="M320 173C395 173 401 280 472 280" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
-  <path d="M728 280C799 280 805 173 878 173" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
-  <path d="M320 581C395 581 401 480 472 480" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
-  <path d="M728 480C799 480 805 581 878 581" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
-
-  <circle cx="472" cy="280" r="8" fill="#D40511"/>
-  <circle cx="728" cy="280" r="8" fill="#D40511"/>
-  <circle cx="472" cy="480" r="8" fill="#D40511"/>
-  <circle cx="728" cy="480" r="8" fill="#D40511"/>
-
-  <text x="600" y="690" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#1D2939">Principle: learn early, enrich later, activate intelligently</text>
+<rect width="1200" height="760" rx="28" fill="#F8FAFC"/>
+<text x="70" y="76" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#101828">CleverTap as DHL's customer logic layer</text>
+<rect x="70" y="110" width="250" height="160" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="98" y="150" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#101828">Website / App</text>
+<text x="98" y="188" font-family="Arial, sans-serif" font-size="16" fill="#475467">Anonymous browsing and service intent</text>
+<text x="98" y="214" font-family="Arial, sans-serif" font-size="16" fill="#475467">Rates, tracking, pickup, support</text>
+<rect x="880" y="110" width="250" height="160" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="908" y="150" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#101828">Google / Meta</text>
+<text x="908" y="188" font-family="Arial, sans-serif" font-size="16" fill="#475467">Acquisition, retargeting and measurement</text>
+<text x="908" y="214" font-family="Arial, sans-serif" font-size="16" fill="#475467">Optimization remains native</text>
+<rect x="70" y="490" width="250" height="160" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="98" y="530" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#101828">LINE</text>
+<text x="98" y="568" font-family="Arial, sans-serif" font-size="16" fill="#475467">Identity, messaging and service flows</text>
+<text x="98" y="594" font-family="Arial, sans-serif" font-size="16" fill="#475467">LIFF and future support intelligence</text>
+<rect x="880" y="490" width="250" height="160" rx="22" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="908" y="530" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#101828">Loyalty / CRM</text>
+<text x="908" y="568" font-family="Arial, sans-serif" font-size="16" fill="#475467">Retention, recurring use and future</text>
+<text x="908" y="594" font-family="Arial, sans-serif" font-size="16" fill="#475467">relationship expansion</text>
+<rect x="470" y="235" width="260" height="290" rx="28" fill="#FFFFFF" stroke="#D0D5DD" stroke-width="2"/>
+<rect x="498" y="262" width="204" height="46" rx="16" fill="#FFF1F2"/>
+<text x="600" y="292" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#D40511">CleverTap</text>
+<text x="600" y="326" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Central customer memory and action layer</text>
+<rect x="515" y="368" width="170" height="44" rx="14" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="600" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#101828">Behavior memory</text>
+<rect x="515" y="424" width="170" height="44" rx="14" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="600" y="451" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#101828">Segmentation</text>
+<rect x="515" y="480" width="170" height="44" rx="14" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="600" y="507" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#101828">Activation</text>
+<path d="M320 190C405 190 395 280 470 280" stroke="#B1B6C0" stroke-width="4" stroke-linecap="round"/>
+<path d="M880 190C795 190 805 280 730 280" stroke="#B1B6C0" stroke-width="4" stroke-linecap="round"/>
+<path d="M320 570C405 570 395 480 470 480" stroke="#B1B6C0" stroke-width="4" stroke-linecap="round"/>
+<path d="M880 570C795 570 805 480 730 480" stroke="#B1B6C0" stroke-width="4" stroke-linecap="round"/>
+<circle cx="470" cy="280" r="9" fill="#D40511"/>
+<circle cx="730" cy="280" r="9" fill="#D40511"/>
+<circle cx="470" cy="480" r="9" fill="#D40511"/>
+<circle cx="730" cy="480" r="9" fill="#D40511"/>
+<text x="600" y="692" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#25324B">Principle: learn early, enrich later, activate intelligently</text>
 </svg>

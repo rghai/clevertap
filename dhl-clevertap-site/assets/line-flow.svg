@@ -1,55 +1,47 @@
-<svg width="1200" height="820" viewBox="0 0 1200 820" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="820" rx="28" fill="#F8FAFC"/>
-  <text x="70" y="76" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#101828">LINE: from support inbox to identity, service and engagement operating channel</text>
-
-  <g>
-    <rect x="70" y="130" width="290" height="610" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="100" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">1. Today</text>
-    <rect x="100" y="206" width="230" height="84" rx="18" fill="#EAFBF1" stroke="#CDEFD9"/>
-    <text x="215" y="242" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#06A94D">LINE Official Account</text>
-    <text x="215" y="267" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Customer messages support</text>
-    <path d="M215 290V342" stroke="#B3B8C2" stroke-width="3" stroke-linecap="round"/>
-    <rect x="100" y="342" width="230" height="84" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
-    <text x="215" y="378" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#101828">Tracking / pickup / reschedule</text>
-    <text x="215" y="403" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Valuable intent, often trapped in chat</text>
-    <text x="100" y="482" font-family="Arial, sans-serif" font-size="15" fill="#475467">Strong reach.</text>
-    <text x="100" y="507" font-family="Arial, sans-serif" font-size="15" fill="#475467">Weak profile linkage.</text>
-    <text x="100" y="532" font-family="Arial, sans-serif" font-size="15" fill="#475467">Limited commercial memory.</text>
-  </g>
-
-  <g>
-    <rect x="410" y="130" width="380" height="610" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="440" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">2. No-heavy-middleware progression</text>
-    <rect x="440" y="206" width="320" height="72" rx="16" fill="#EAFBF1" stroke="#CDEFD9"/>
-    <text x="600" y="248" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#06A94D">LINE rich menu / message CTA</text>
-    <path d="M600 278V322" stroke="#06A94D" stroke-width="3" stroke-linecap="round"/>
-    <rect x="440" y="322" width="320" height="72" rx="16" fill="#FFF8E1" stroke="#F2E3B0"/>
-    <text x="600" y="364" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#7A5B00">LIFF or LINE Login flow</text>
-    <path d="M600 394V438" stroke="#7A5B00" stroke-width="3" stroke-linecap="round"/>
-    <rect x="440" y="438" width="320" height="72" rx="16" fill="#FFF2F3" stroke="#F0C7CB"/>
-    <text x="600" y="469" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#D40511">Capture LINE UID + intent</text>
-    <text x="600" y="494" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Tracking ID, shipment ref, flow completion</text>
-    <path d="M600 510V554" stroke="#D40511" stroke-width="3" stroke-linecap="round"/>
-    <rect x="440" y="554" width="320" height="72" rx="16" fill="#F7F9FC" stroke="#E6E8EC"/>
-    <text x="600" y="596" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#101828">CleverTap profile enrichment</text>
-    <text x="440" y="680" font-family="Arial, sans-serif" font-size="15" fill="#475467">Best for structured journeys without full conversational ingestion.</text>
-  </g>
-
-  <g>
-    <rect x="840" y="130" width="290" height="610" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="870" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">3. Smart bot server</text>
-    <rect x="870" y="206" width="230" height="84" rx="18" fill="#FFF8E1" stroke="#F2E3B0"/>
-    <text x="985" y="241" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#7A5B00">Read inbound messages</text>
-    <text x="985" y="267" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Intent and context extraction</text>
-    <path d="M985 290V342" stroke="#B3B8C2" stroke-width="3" stroke-linecap="round"/>
-    <rect x="870" y="342" width="230" height="84" rx="18" fill="#FFF2F3" stroke="#F0C7CB"/>
-    <text x="985" y="378" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#D40511">Update CleverTap + systems</text>
-    <text x="985" y="403" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Shipment and profile enrichment</text>
-    <path d="M985 426V478" stroke="#B3B8C2" stroke-width="3" stroke-linecap="round"/>
-    <rect x="870" y="478" width="230" height="84" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
-    <text x="985" y="514" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#101828">Agent assist + automation</text>
-    <text x="985" y="539" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">True two-way service channel</text>
-    <text x="870" y="620" font-family="Arial, sans-serif" font-size="15" fill="#475467">Highest upside, but requires a deliberate</text>
-    <text x="870" y="645" font-family="Arial, sans-serif" font-size="15" fill="#475467">middleware layer and identity design.</text>
-  </g>
+<svg width="1200" height="860" viewBox="0 0 1200 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1200" height="860" rx="28" fill="#F8FAFC"/>
+<text x="70" y="68" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#101828">LINE: from support inbox to identity, service and</text>
+<text x="70" y="102" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#101828">engagement operating channel</text>
+<rect x="70" y="140" width="292" height="620" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="100" y="182" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">1. Today</text>
+<rect x="100" y="218" width="232" height="82" rx="18" fill="#EEF8F2" stroke="#CDE9D7"/>
+<text x="216" y="255" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#00A341">LINE Official Account</text>
+<text x="216" y="279" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Customer messaging support</text>
+<path d="M216 300V356" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+<rect x="100" y="356" width="232" height="86" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="216" y="393" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Tracking / pickup / reschedule</text>
+<text x="216" y="417" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Valuable intent, often trapped in chat</text>
+<text x="100" y="500" font-family="Arial, sans-serif" font-size="16" fill="#475467">Strong reach.</text>
+<text x="100" y="532" font-family="Arial, sans-serif" font-size="16" fill="#475467">Weak profile linkage.</text>
+<text x="100" y="564" font-family="Arial, sans-serif" font-size="16" fill="#475467">Limited commercial memory.</text>
+<rect x="408" y="140" width="382" height="620" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="438" y="182" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">2. No-heavy-middleware progression</text>
+<rect x="438" y="218" width="322" height="72" rx="18" fill="#EEF8F2" stroke="#CDE9D7"/>
+<text x="599" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#00A341">LINE rich menu / message CTA</text>
+<path d="M599 290V338" stroke="#00A341" stroke-width="4" stroke-linecap="round"/>
+<rect x="438" y="338" width="322" height="72" rx="18" fill="#FFF8E1" stroke="#F2E3B0"/>
+<text x="599" y="380" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#7A5B00">LIFF or LINE Login flow</text>
+<path d="M599 410V458" stroke="#7A5B00" stroke-width="4" stroke-linecap="round"/>
+<rect x="438" y="458" width="322" height="76" rx="18" fill="#FFF1F2" stroke="#F0C7CB"/>
+<text x="599" y="496" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#D40511">Capture LINE UID + service intent</text>
+<text x="599" y="520" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Tracking ID, shipment ref, flow completion</text>
+<path d="M599 534V582" stroke="#D40511" stroke-width="4" stroke-linecap="round"/>
+<rect x="438" y="582" width="322" height="72" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="599" y="625" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">CleverTap profile enrichment</text>
+<text x="438" y="692" font-family="Arial, sans-serif" font-size="16" fill="#475467">Best for structured journeys without full chat ingestion.</text>
+<rect x="838" y="140" width="292" height="620" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="868" y="182" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">3. Smart bot server</text>
+<rect x="868" y="218" width="232" height="82" rx="18" fill="#FFF8E1" stroke="#F2E3B0"/>
+<text x="984" y="254" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#7A5B00">Read inbound messages</text>
+<text x="984" y="278" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Intent and context extraction</text>
+<path d="M984 300V356" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+<rect x="868" y="356" width="232" height="86" rx="18" fill="#FFF1F2" stroke="#F0C7CB"/>
+<text x="984" y="392" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#D40511">Update CleverTap + systems</text>
+<text x="984" y="416" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">Shipment and profile enrichment</text>
+<path d="M984 442V498" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+<rect x="868" y="498" width="232" height="86" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="984" y="536" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Agent assist + automation</text>
+<text x="984" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475467">True two-way service channel</text>
+<text x="868" y="636" font-family="Arial, sans-serif" font-size="16" fill="#475467">Highest upside, but requires deliberate</text>
+<text x="868" y="662" font-family="Arial, sans-serif" font-size="16" fill="#475467">middleware and identity design.</text>
 </svg>

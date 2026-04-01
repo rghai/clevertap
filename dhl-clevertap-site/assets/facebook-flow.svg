@@ -1,49 +1,40 @@
-<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="720" rx="28" fill="#F8FAFC"/>
-  <text x="70" y="74" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#101828">Meta: from fragmented website signal to stronger audience and event intelligence</text>
-
-  <g>
-    <rect x="70" y="130" width="320" height="500" rx="24" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="100" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">1. As-is today</text>
-    <rect x="100" y="206" width="260" height="70" rx="16" fill="#F7F9FC" stroke="#E6E8EC"/>
-    <text x="230" y="247" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Website + Pixel</text>
-    <path d="M230 276V328" stroke="#B3B8C2" stroke-width="3" stroke-linecap="round"/>
-    <rect x="100" y="328" width="260" height="70" rx="16" fill="#F7F9FC" stroke="#E6E8EC"/>
-    <text x="230" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Meta matching</text>
-    <path d="M230 398V450" stroke="#B3B8C2" stroke-width="3" stroke-linecap="round"/>
-    <rect x="100" y="450" width="260" height="70" rx="16" fill="#F7F9FC" stroke="#E6E8EC"/>
-    <text x="230" y="490" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Retargeting / reporting</text>
-    <text x="100" y="568" font-family="Arial, sans-serif" font-size="15" fill="#475467">Useful, but weaker when identity is</text>
-    <text x="100" y="591" font-family="Arial, sans-serif" font-size="15" fill="#475467">incomplete or consent is limited.</text>
-  </g>
-
-  <g>
-    <rect x="440" y="130" width="320" height="500" rx="24" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="470" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">2. With CleverTap</text>
-    <rect x="470" y="206" width="260" height="70" rx="16" fill="#FFF2F3" stroke="#F0C7CB"/>
-    <text x="600" y="247" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#D40511">Behavioral segments</text>
-    <path d="M600 276V328" stroke="#D40511" stroke-width="3" stroke-linecap="round"/>
-    <rect x="470" y="328" width="260" height="70" rx="16" fill="#F7F9FC" stroke="#E6E8EC"/>
-    <text x="600" y="369" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Facebook Custom Audiences</text>
-    <path d="M600 398V450" stroke="#B3B8C2" stroke-width="3" stroke-linecap="round"/>
-    <rect x="470" y="450" width="260" height="70" rx="16" fill="#F7F9FC" stroke="#E6E8EC"/>
-    <text x="600" y="490" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Sharper re-engagement</text>
-    <text x="470" y="568" font-family="Arial, sans-serif" font-size="15" fill="#475467">CleverTap decides which audience pockets</text>
-    <text x="470" y="591" font-family="Arial, sans-serif" font-size="15" fill="#475467">are commercially worth treating differently.</text>
-  </g>
-
-  <g>
-    <rect x="810" y="130" width="320" height="500" rx="24" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
-    <text x="840" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">3. Advanced path</text>
-    <rect x="840" y="206" width="260" height="70" rx="16" fill="#FFF8E1" stroke="#F2E3B0"/>
-    <text x="970" y="247" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#7A5B00">CleverTap event logic</text>
-    <path d="M970 276V328" stroke="#7A5B00" stroke-width="3" stroke-linecap="round"/>
-    <rect x="840" y="328" width="260" height="70" rx="16" fill="#FFF2F3" stroke="#F0C7CB"/>
-    <text x="970" y="368" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#D40511">Meta Conversions API</text>
-    <path d="M970 398V450" stroke="#B3B8C2" stroke-width="3" stroke-linecap="round"/>
-    <rect x="840" y="450" width="260" height="70" rx="16" fill="#F7F9FC" stroke="#E6E8EC"/>
-    <text x="970" y="490" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Stronger optimization signal</text>
-    <text x="840" y="568" font-family="Arial, sans-serif" font-size="15" fill="#475467">Best added where better attribution and</text>
-    <text x="840" y="591" font-family="Arial, sans-serif" font-size="15" fill="#475467">optimization justify the extra design effort.</text>
-  </g>
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1200" height="760" rx="28" fill="#F8FAFC"/>
+<text x="70" y="74" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#101828">Meta: from fragmented signal to stronger audience and event intelligence</text>
+<rect x="70" y="128" width="320" height="530" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="100" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">1. As-is today</text>
+<rect x="100" y="206" width="260" height="70" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="230" y="248" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Website + Pixel</text>
+<path d="M230 276V330" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+<rect x="100" y="330" width="260" height="70" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="230" y="372" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Meta matching</text>
+<path d="M230 400V452" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+<rect x="100" y="452" width="260" height="70" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="230" y="494" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Retargeting / reporting</text>
+<text x="100" y="570" font-family="Arial, sans-serif" font-size="16" fill="#475467">Useful, but weaker when identity is incomplete</text>
+<text x="100" y="596" font-family="Arial, sans-serif" font-size="16" fill="#475467">or marketing consent is limited.</text>
+<rect x="438" y="128" width="320" height="530" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="468" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">2. With CleverTap</text>
+<rect x="468" y="206" width="260" height="70" rx="18" fill="#FFF1F2" stroke="#F0C7CB"/>
+<text x="598" y="247" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#D40511">Behavioral segments</text>
+<path d="M598 276V330" stroke="#D40511" stroke-width="4" stroke-linecap="round"/>
+<rect x="468" y="330" width="260" height="70" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="598" y="372" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Facebook Custom Audiences</text>
+<path d="M598 400V452" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+<rect x="468" y="452" width="260" height="70" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="598" y="494" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Sharper re-engagement</text>
+<text x="468" y="570" font-family="Arial, sans-serif" font-size="16" fill="#475467">CleverTap decides which audience pockets are</text>
+<text x="468" y="596" font-family="Arial, sans-serif" font-size="16" fill="#475467">commercially worth treating differently.</text>
+<rect x="806" y="128" width="324" height="530" rx="26" fill="#FFFFFF" stroke="#E6E8EC" stroke-width="2"/>
+<text x="836" y="170" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#101828">3. Advanced path</text>
+<rect x="836" y="206" width="264" height="70" rx="18" fill="#FFF8E1" stroke="#F2E3B0"/>
+<text x="968" y="247" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#7A5B00">CleverTap event logic</text>
+<path d="M968 276V330" stroke="#7A5B00" stroke-width="4" stroke-linecap="round"/>
+<rect x="836" y="330" width="264" height="70" rx="18" fill="#FFF1F2" stroke="#F0C7CB"/>
+<text x="968" y="372" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#D40511">Meta Conversions API</text>
+<path d="M968 400V452" stroke="#B3B8C2" stroke-width="4" stroke-linecap="round"/>
+<rect x="836" y="452" width="264" height="70" rx="18" fill="#F7F9FC" stroke="#E6E8EC"/>
+<text x="968" y="494" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#101828">Stronger optimization signal</text>
+<text x="836" y="570" font-family="Arial, sans-serif" font-size="16" fill="#475467">Best added where stronger attribution or bidding</text>
+<text x="836" y="596" font-family="Arial, sans-serif" font-size="16" fill="#475467">signal clearly justifies the extra effort.</text>
 </svg>
