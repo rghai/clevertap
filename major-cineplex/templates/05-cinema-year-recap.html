@@ -1,0 +1,629 @@
+<!-- Adapted for a synthetic Major Cineplex sales demonstration from https://github.com/shijunneo-bot/ct-template-gallery/blob/main/templates/catchplay-wrapped.html . Not affiliated with Major Cineplex; no live booking or customer data. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+const CONFIG = {
+  includeDismissButton: true,
+  brand: { name: "MAJOR CINEPLEX", tagline: "For Movie Lovers, By Movie Lovers", gold: "#F4A623", goldLight: "#F5D98A" },
+  // Mock user data — in production, pulled from CleverTap profile properties
+  user: {
+    name: "Movie Lover",
+    totalMinutes: 2240,
+    cinemaVisits: 18,
+    topGenre: "Thriller",
+    topGenreCount: 8,
+    topGenrePct: 44,
+    topActor: "Tony Leung",
+    topActorVisits: 8,
+    topDirector: "Park Chan-wook",
+    topDirectorVisits: 5,
+    longestSession: "3h 22m",
+    longestFilm: "Killers of the Flower Moon",
+    lateNightCount: 6,
+    percentile: 12,
+    topMood: "Edge-of-seat nights",
+  },
+  testMode: new URLSearchParams(window.location.search).get("test") === "true",
+};
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>MAJOR CINEPLEX 2026 Wrapped</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --gold:#F4A623;--gold-l:#F5D98A;
+  --screen-bg:#0A0A0F;
+}
+
+body{
+  font-family:'DM Sans',-apple-system,sans-serif;
+  background:#0A0A0F;min-height:100vh;
+  display:flex;justify-content:center;align-items:flex-start;
+  padding:10px;-webkit-tap-highlight-color:transparent;
+  overflow:hidden;
+}
+
+.wrap{
+  width:100%;max-width:380px;height:640px;
+  border-radius:24px;overflow:hidden;
+  position:relative;
+  box-shadow:0 20px 80px rgba(0,0,0,0.8);
+}
+
+/* === PROGRESS BAR === */
+.prog{
+  position:absolute;top:0;left:0;right:0;z-index:50;
+  display:flex;gap:3px;padding:12px 14px 0;
+}
+.prog-seg{
+  flex:1;height:3px;border-radius:2px;
+  background:rgba(255,255,255,0.15);
+  overflow:hidden;position:relative;
+}
+.prog-fill{
+  position:absolute;inset:0;
+  background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 0.3s ease;
+}
+.prog-seg.done .prog-fill{transform:scaleX(1)}
+.prog-seg.active .prog-fill{transform:scaleX(1);transition:transform 8s linear}
+
+/* === DISMISS === */
+.x-btn{
+  position:absolute;top:12px;right:14px;z-index:60;
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);
+  border:none;cursor:pointer;color:rgba(255,255,255,0.5);
+  font-size:15px;display:flex;align-items:center;justify-content:center;
+}
+
+/* === SCREENS === */
+.screen{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;padding:60px 32px 40px;
+  opacity:0;pointer-events:none;
+  overflow:hidden;
+  transform:translateX(60px);
+  transition:opacity 0.45s ease,transform 0.45s ease;
+}
+.screen.active{
+  opacity:1;pointer-events:none;
+  transform:translateX(0);
+}
+.screen.gone-left{
+  opacity:0;transform:translateX(-60px);
+}
+.screen.gone-right{
+  opacity:0;transform:translateX(60px);
+}
+.screen.no-transition{transition:none}
+
+/* Tap zones — ABOVE everything */
+.tap-left,.tap-right{
+  position:absolute;top:30px;bottom:0;z-index:100;
+  cursor:pointer;
+}
+.tap-left{left:0;width:30%}
+.tap-right{right:0;width:70%}
+
+/* === COMMON TYPOGRAPHY === */
+.big-num{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:96px;line-height:1;color:#FFF;
+  letter-spacing:-1px;
+}
+.big-label{
+  font-size:15px;font-weight:700;color:rgba(255,255,255,0.7);
+  text-transform:uppercase;letter-spacing:2px;
+  margin-bottom:12px;
+}
+.big-text{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:64px;line-height:1.05;color:#FFF;
+  letter-spacing:1px;
+}
+.stat-note{
+  font-size:13px;font-weight:500;
+  color:rgba(255,255,255,0.45);
+  margin-top:12px;line-height:1.5;
+  max-width:280px;
+}
+.stat-badge{
+  display:inline-block;
+  padding:6px 16px;border-radius:20px;
+  font-size:12px;font-weight:700;
+  margin-top:14px;
+}
+
+/* Grain overlay for cinema feel */
+.screen::after{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+  opacity:0.5;
+}
+.screen>*{position:relative;z-index:1}
+
+/* === S0: INTRO === */
+.s0{background:linear-gradient(160deg,#0A0A0F 0%,#1A0A2E 40%,#2D0A3E 100%)}
+.s0-logo{font-family:'Bebas Neue';font-size:28px;letter-spacing:4px;color:var(--gold);margin-bottom:6px}
+.s0-plus{font-size:16px;color:var(--gold-l)}
+.s0-year{
+  font-family:'Bebas Neue';font-size:120px;
+  line-height:0.9;letter-spacing:-2px;
+  background:linear-gradient(180deg,#FFF 20%,var(--gold) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin:16px 0 8px;
+  animation:yearPulse 3s ease-in-out infinite;
+}
+@keyframes yearPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
+.s0-sub{font-size:14px;color:rgba(255,255,255,0.4);line-height:1.5}
+.s0-tap{
+  position:absolute;bottom:40px;
+  font-size:11px;font-weight:600;color:rgba(255,255,255,0.2);
+  animation:tapPulse 2s ease-in-out infinite;
+}
+@keyframes tapPulse{0%,100%{opacity:0.2}50%{opacity:0.5}}
+
+/* === S1: SCREEN TIME === */
+.s1{background:linear-gradient(160deg,#0F1A0A 0%,#1A2E0A 30%,#3D5A1E 100%)}
+.s1 .big-num{color:#A3E635}
+.s1 .stat-badge{background:rgba(163,230,53,0.15);color:#A3E635}
+
+/* === S2: MOVIES COUNT === */
+.s2{background:linear-gradient(160deg,#0A1520 0%,#0A2540 30%,#0E4D6E 100%)}
+.s2 .big-num{color:#38BDF8}
+.s2 .stat-badge{background:rgba(56,189,248,0.15);color:#38BDF8}
+
+/* === S3: TOP GENRE === */
+.s3{background:linear-gradient(160deg,#1A0A0A 0%,#3D0A1E 30%,#6E0E2E 100%)}
+.s3 .big-text{color:#FB7185}
+.s3 .stat-badge{background:rgba(251,113,133,0.15);color:#FB7185}
+
+/* === S4: TOP ACTOR === */
+.s4{background:linear-gradient(160deg,#0F0A1A 0%,#1E0A3D 30%,#4C1D95 100%)}
+.s4 .big-text{color:#C4B5FD}
+.s4 .stat-badge{background:rgba(196,181,253,0.15);color:#C4B5FD}
+
+/* === S5: TOP DIRECTOR === */
+.s5{background:linear-gradient(160deg,#1A1505 0%,#3D2E0A 30%,#78620D 100%)}
+.s5 .big-text{color:var(--gold-l)}
+.s5 .stat-badge{background:rgba(212,168,67,0.15);color:var(--gold-l)}
+
+/* === S6: NIGHT OWL === */
+.s6{background:linear-gradient(160deg,#050510 0%,#0A0A2E 30%,#0F1050 100%)}
+.s6 .big-num{color:#818CF8}
+.s6 .stat-badge{background:rgba(129,140,248,0.15);color:#818CF8}
+
+/* === S7: SUMMARY === */
+.s7{background:linear-gradient(160deg,#0A0A0F 0%,#14101F 50%,#0A0A0F 100%)}
+.summary-card{
+  width:100%;max-width:300px;
+  background:#14101F;border:1px solid rgba(212,168,67,0.15);
+  border-radius:20px;padding:24px 20px;
+  position:relative;overflow:hidden;
+}
+.summary-card::before{
+  content:'';position:absolute;top:-50px;right:-50px;
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(212,168,67,0.1),transparent 70%);
+  pointer-events:none;
+}
+.sc-logo{font-family:'Bebas Neue';font-size:16px;letter-spacing:3px;color:var(--gold);margin-bottom:2px}
+.sc-year{font-family:'Bebas Neue';font-size:14px;color:rgba(255,255,255,0.3);letter-spacing:2px;margin-bottom:16px}
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;text-align:left}
+.sc-item{}
+.sc-val{font-family:'Bebas Neue';font-size:28px;color:#FFF;line-height:1.1;letter-spacing:0.5px}
+.sc-lbl{font-size:10px;font-weight:600;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.5px}
+.sc-divider{height:1px;background:rgba(255,255,255,0.06);margin:12px 0}
+.sc-mood{font-size:12px;font-weight:600;color:var(--gold);text-align:center}
+.sc-mood-label{font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:4px}
+
+.btn-share{
+  width:100%;max-width:300px;
+  padding:14px;border:none;border-radius:14px;
+  font-family:inherit;font-size:14px;font-weight:700;
+  cursor:pointer;color:#0A0A0F;margin-top:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-l));
+  box-shadow:0 4px 20px rgba(212,168,67,0.3);
+  transition:all 0.2s;
+}
+.btn-share:active{transform:scale(0.97)}
+.btn-replay{
+  width:100%;max-width:300px;
+  padding:10px;border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px;background:transparent;
+  font-family:inherit;font-size:11px;font-weight:600;
+  color:rgba(255,255,255,0.25);cursor:pointer;margin-top:6px;
+}
+
+/* === COUNTER ANIMATION === */
+.counter{display:inline-block}
+
+/* === EMOJI FLOAT === */
+.float-emoji{
+  position:absolute;font-size:32px;opacity:0;
+  animation:emojiFloat 3s ease-out forwards;
+  pointer-events:none;z-index:0;
+}
+@keyframes emojiFloat{
+  0%{opacity:0;transform:translateY(0) scale(0.5) rotate(0deg)}
+  15%{opacity:0.7;transform:scale(1)}
+  100%{opacity:0;transform:translateY(-200px) scale(0.3) rotate(25deg)}
+}
+
+/* Test */
+.test{position:absolute;bottom:10px;left:10px;right:10px;z-index:70;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.12);border-radius:10px;padding:8px;display:none}
+.test.on{display:block}
+.test-btns{display:flex;flex-wrap:wrap;gap:3px}
+.tb{padding:3px 8px;border-radius:6px;border:1px solid rgba(245,158,11,0.15);background:rgba(245,158,11,0.04);font-family:inherit;font-size:9px;font-weight:600;color:#F5A623;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+
+  <!-- Progress Bar -->
+  <div class="prog" id="prog"></div>
+  <button class="x-btn" onclick="dismiss()">✕</button>
+
+  <!-- Tap Zones -->
+  <div class="tap-left" onclick="prev()"></div>
+  <div class="tap-right" onclick="next()"></div>
+
+  <!-- S0: INTRO -->
+  <div class="screen s0 active" data-idx="0">
+    <div class="s0-logo">MAJOR<span class="s0-plus">+</span></div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:1px;text-transform:uppercase">presents</div>
+    <div class="s0-year">2026</div>
+    <div style="font-family:'Bebas Neue';font-size:26px;color:#FFF;letter-spacing:3px">YOUR YEAR IN<br>MOVIES</div>
+    <div class="s0-sub">Every frame you watched.<br>Every story you lived.</div>
+    <div class="s0-tap">Tap to begin →</div>
+  </div>
+
+  <!-- S1: SCREEN TIME -->
+  <div class="screen s1" data-idx="1">
+    <div class="big-label">Total Screen Time</div>
+    <div class="big-num"><span class="counter" data-target="" data-suffix=""></span></div>
+    <div style="font-family:'Bebas Neue';font-size:26px;color:rgba(163,230,53,0.6);letter-spacing:2px;margin-top:-4px">HOURS</div>
+    <div class="stat-note">That's <strong id="daysNote"></strong> of non-stop cinema. You really committed.</div>
+    <div class="stat-badge">🍿 Top <span id="pctBadge"></span>% of viewers</div>
+  </div>
+
+  <!-- S2: MOVIES WATCHED -->
+  <div class="screen s2" data-idx="2">
+    <div class="big-label">Cinema Visits</div>
+    <div class="big-num"><span class="counter" data-target="" data-suffix=""></span></div>
+    <div style="font-family:'Bebas Neue';font-size:26px;color:rgba(56,189,248,0.6);letter-spacing:2px;margin-top:-4px">FILMS</div>
+    <div class="stat-note">That's more than one film every 5 days. Dedicated cinephile energy.</div>
+    <div class="stat-badge">🎬 1 film every 5 days</div>
+  </div>
+
+  <!-- S3: TOP GENRE -->
+  <div class="screen s3" data-idx="3">
+    <div class="big-label">Your #1 Genre</div>
+    <div class="big-text" id="genreText"></div>
+    <div class="stat-note"><span id="genreCount"></span> cinema visits · <span id="genrePct"></span>% of your at the movies</div>
+    <div class="stat-badge">🔥 You love the tension</div>
+  </div>
+
+  <!-- S4: TOP ACTOR -->
+  <div class="screen s4" data-idx="4">
+    <div class="big-label">Your Favourite Star</div>
+    <div class="big-text" id="actorText" style="font-size:52px"></div>
+    <div class="stat-note">You watched <span id="actorCount"></span> of their cinema visits this year. True devotion.</div>
+    <div class="stat-badge">⭐ Your screen soulmate</div>
+  </div>
+
+  <!-- S5: TOP DIRECTOR -->
+  <div class="screen s5" data-idx="5">
+    <div class="big-label">Your Go-To Director</div>
+    <div class="big-text" id="directorText" style="font-size:46px"></div>
+    <div class="stat-note">You watched <span id="directorCount"></span> cinema visits they directed. You trust their vision.</div>
+    <div class="stat-badge">🎥 A filmmaker's fan</div>
+  </div>
+
+  <!-- S6: NIGHT OWL -->
+  <div class="screen s6" data-idx="6">
+    <div class="big-label">After-Midnight Cinema</div>
+    <div class="big-num"><span class="counter" data-target="" data-suffix=""></span></div>
+    <div style="font-family:'Bebas Neue';font-size:26px;color:rgba(129,140,248,0.6);letter-spacing:2px;margin-top:-4px">LATE NIGHTS</div>
+    <div class="stat-note">Your longest session was <strong id="longestNote"></strong> at the movies<br><em id="longestFilm"></em></div>
+    <div class="stat-badge">🌙 Night owl cinephile</div>
+  </div>
+
+  <!-- S7: SUMMARY -->
+  <div class="screen s7" data-idx="7">
+    <div class="summary-card" id="summaryCard">
+      <div class="sc-logo">MAJOR<span style="color:var(--gold-l)">+</span></div>
+      <div class="sc-year">MY 2026 IN MOVIES</div>
+      <div class="sc-grid">
+        <div class="sc-item"><div class="sc-val" id="scTime"></div><div class="sc-lbl">Hours watched</div></div>
+        <div class="sc-item"><div class="sc-val" id="scVisits"></div><div class="sc-lbl">Visits</div></div>
+        <div class="sc-item"><div class="sc-val" id="scGenre"></div><div class="sc-lbl">#1 Genre</div></div>
+        <div class="sc-item"><div class="sc-val" id="scActor"></div><div class="sc-lbl">Fav Star</div></div>
+        <div class="sc-item"><div class="sc-val" id="scDirector"></div><div class="sc-lbl">Fav Director</div></div>
+        <div class="sc-item"><div class="sc-val" id="scNights"></div><div class="sc-lbl">Late Nights</div></div>
+      </div>
+      <div class="sc-divider"></div>
+      <div class="sc-mood-label">My 2026 Movie Mood</div>
+      <div class="sc-mood" id="scMood"></div>
+    </div>
+    <button class="btn-share" onclick="shareWrap()">Share My 2026 Wrapped</button>
+    <button class="btn-replay" onclick="replay()">↻ Replay Recap</button>
+  </div>
+
+  <!-- Test -->
+  <div class="test" id="testPanel">
+    <div class="test-btns">
+      <button class="tb" onclick="goTo(0)">Intro</button>
+      <button class="tb" onclick="goTo(1)">Time</button>
+      <button class="tb" onclick="goTo(2)">Count</button>
+      <button class="tb" onclick="goTo(3)">Genre</button>
+      <button class="tb" onclick="goTo(4)">Actor</button>
+      <button class="tb" onclick="goTo(5)">Director</button>
+      <button class="tb" onclick="goTo(6)">Night</button>
+      <button class="tb" onclick="goTo(7)">Summary</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================
+// STATE
+// ============================================
+const TOTAL = 8;
+let cur = 0;
+const U = CONFIG.user;
+const loadTime = Date.now();
+const screenTimes = {};
+
+// ============================================
+// INIT
+// ============================================
+function init() {
+  if (!CONFIG.includeDismissButton) document.querySelector('.x-btn').style.display = 'none';
+  if (CONFIG.testMode) document.getElementById('testPanel').classList.add('on');
+
+  // Build progress segments
+  const prog = document.getElementById('prog');
+  for (let i = 0; i < TOTAL; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'prog-seg';
+    seg.innerHTML = '<div class="prog-fill"></div>';
+    prog.appendChild(seg);
+  }
+
+  // Populate data
+  const hours = Math.round(U.totalMinutes / 60);
+  const days = (U.totalMinutes / 1440).toFixed(1);
+
+  // S1
+  document.querySelectorAll('.s1 .counter')[0].dataset.target = hours;
+  document.getElementById('daysNote').textContent = days + ' full days';
+  document.getElementById('pctBadge').textContent = U.percentile;
+
+  // S2
+  document.querySelectorAll('.s2 .counter')[0].dataset.target = U.cinemaVisits;
+
+  // S3
+  document.getElementById('genreText').textContent = U.topGenre;
+  document.getElementById('genreCount').textContent = U.topGenreCount;
+  document.getElementById('genrePct').textContent = U.topGenrePct;
+
+  // S4
+  document.getElementById('actorText').textContent = U.topActor;
+  document.getElementById('actorCount').textContent = U.topActorVisits;
+
+  // S5
+  document.getElementById('directorText').textContent = U.topDirector;
+  document.getElementById('directorCount').textContent = U.topDirectorVisits;
+
+  // S6
+  document.querySelectorAll('.s6 .counter')[0].dataset.target = U.lateNightCount;
+  document.getElementById('longestNote').textContent = U.longestSession;
+  document.getElementById('longestFilm').textContent = U.longestFilm;
+
+  // S7 summary
+  document.getElementById('scTime').textContent = hours;
+  document.getElementById('scVisits').textContent = U.cinemaVisits;
+  document.getElementById('scGenre').textContent = U.topGenre;
+  document.getElementById('scActor').textContent = U.topActor.split(' ').pop();
+  document.getElementById('scDirector').textContent = U.topDirector.split(' ').pop();
+  document.getElementById('scNights').textContent = U.lateNightCount;
+  document.getElementById('scMood').textContent = `"${U.topMood}"`;
+
+  updateProgress();
+  activateScreen(0);
+  pushEvent('Wrap_Started', {});
+}
+
+// ============================================
+// NAVIGATION
+// ============================================
+function next() {
+  if (cur < TOTAL - 1) goTo(cur + 1);
+}
+function prev() {
+  if (cur > 0) goTo(cur - 1);
+}
+
+function goTo(idx) {
+  if (idx === cur || idx < 0 || idx >= TOTAL) return;
+  const direction = idx > cur ? 1 : -1;
+  const oldScreen = document.querySelector(`.screen[data-idx="${cur}"]`);
+  const newScreen = document.querySelector(`.screen[data-idx="${idx}"]`);
+
+  // 1. Exit old screen
+  oldScreen.classList.remove('active');
+  oldScreen.classList.add(direction > 0 ? 'gone-left' : 'gone-right');
+
+  // 2. Position new screen on the entry side (no transition)
+  newScreen.classList.add('no-transition');
+  newScreen.classList.remove('active', 'gone-left', 'gone-right');
+  // It defaults to translateX(60px) from base .screen
+  if (direction < 0) newScreen.classList.add('gone-left');
+  void newScreen.offsetHeight; // force reflow
+
+  // 3. Animate new screen in
+  newScreen.classList.remove('no-transition', 'gone-left', 'gone-right');
+  newScreen.classList.add('active');
+
+  cur = idx;
+  updateProgress();
+  activateScreen(idx);
+
+  pushEvent('Wrap_Screen_Viewed', {
+    screen_index: idx,
+    screen_name: getScreenName(idx),
+  });
+
+  if (idx === TOTAL - 1) {
+    pushEvent('Wrap_Completed', {
+      total_screens: TOTAL,
+      time_to_complete: Math.round((Date.now() - loadTime) / 1000),
+    });
+  }
+}
+
+function getScreenName(i) {
+  return ['intro','screen_time','movies_count','top_genre','top_actor','top_director','night_owl','summary'][i];
+}
+
+function updateProgress() {
+  const segs = document.querySelectorAll('.prog-seg');
+  segs.forEach((seg, i) => {
+    seg.classList.remove('done', 'active');
+    if (i < cur) seg.classList.add('done');
+    else if (i === cur) seg.classList.add('active');
+  });
+}
+
+function activateScreen(idx) {
+  // Run counter animations
+  const screen = document.querySelector(`.screen[data-idx="${idx}"]`);
+  const counters = screen.querySelectorAll('.counter');
+  counters.forEach(c => {
+    const target = parseInt(c.dataset.target);
+    if (!target) return;
+    animateCounter(c, 0, target, 1200);
+  });
+
+  // Float emojis on certain screens
+  const emojiMap = { 1: ['🍿','🎬','⏱️'], 2: ['🎬','🎞️','📽️'], 3: ['😱','💀','🔪'], 6: ['🌙','🦉','⭐'] };
+  if (emojiMap[idx]) spawnEmojis(screen, emojiMap[idx]);
+}
+
+// ============================================
+// COUNTER ANIMATION
+// ============================================
+function animateCounter(el, from, to, duration) {
+  const start = performance.now();
+  const suffix = el.dataset.suffix || '';
+  function step(now) {
+    const elapsed = now - start;
+    const pct = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - pct, 3); // easeOutCubic
+    const val = Math.round(from + (to - from) * ease);
+    el.textContent = val.toLocaleString() + suffix;
+    if (pct < 1) requestAnimationFrame(step);
+  }
+  el.textContent = from;
+  requestAnimationFrame(step);
+}
+
+// ============================================
+// EMOJI FLOAT
+// ============================================
+function spawnEmojis(screen, emojis) {
+  for (let i = 0; i < 6; i++) {
+    setTimeout(() => {
+      const e = document.createElement('div');
+      e.className = 'float-emoji';
+      e.textContent = emojis[i % emojis.length];
+      e.style.left = (10 + Math.random() * 80) + '%';
+      e.style.bottom = '10%';
+      e.style.animationDelay = (Math.random() * 0.5) + 's';
+      e.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+      screen.appendChild(e);
+      setTimeout(() => e.remove(), 5000);
+    }, i * 400);
+  }
+}
+
+// ============================================
+// SHARE
+// ============================================
+function shareWrap() {
+  const hours = Math.round(U.totalMinutes / 60);
+  const text = `My 2026 MAJOR CINEPLEX Wrapped:\n🎬 ${U.cinemaVisits} cinema visits\n⏱️ ${hours} hours\n🏆 Top genre: ${U.topGenre}\n⭐ Fav star: ${U.topActor}\n🎥 Fav director: ${U.topDirector}\n\n#MajorWrapped #2026InCinema`;
+
+  pushEvent('Wrap_Shared', {
+    method: navigator.share ? 'native' : 'clipboard',
+    ranking: U.topGenre,
+  });
+
+  if (navigator.share) {
+    navigator.share({ title: 'My 2026 MAJOR CINEPLEX Wrapped', text }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.btn-share');
+      btn.textContent = '✓ Copied to clipboard!';
+      setTimeout(() => btn.textContent = 'Share My 2026 Wrapped', 2000);
+    }).catch(() => {});
+  }
+}
+
+function replay() {
+  document.querySelectorAll('.screen').forEach(s => {
+    s.classList.remove('active', 'gone-left', 'gone-right', 'no-transition');
+  });
+  cur = 0;
+  document.querySelector('.screen[data-idx="0"]').classList.add('active');
+  updateProgress();
+  pushEvent('Wrap_Replayed', {});
+}
+
+// ============================================
+// CLEVERTAP
+// ============================================
+function pushEvent(name, props) {
+  const p = props || {};
+  p.Timestamp = new Date().toISOString();
+  p.Brand = 'MAJOR CINEPLEX';
+  p.Template = 'Year_In_Review_Wrapped';
+  try {
+    if (typeof CleverTap !== 'undefined' && CleverTap.pushEvent)
+      CleverTap.pushEvent(name, JSON.stringify(p));
+    if (typeof clevertap !== 'undefined' && clevertap.event)
+      clevertap.event.push(name, p);
+    if (window.webkit?.messageHandlers?.clevertap)
+      window.webkit.messageHandlers.clevertap.postMessage(
+        JSON.stringify({ type: 'event', name, props: p }));
+  } catch (e) { console.log('[CT]', name, p); }
+  if (CONFIG.testMode) console.log('%c[CT] ' + name, 'color:#F4A623;font-weight:bold', p);
+}
+
+function dismiss() {
+  pushEvent('Wrap_Dismissed', {
+    screen_reached: cur,
+    screen_name: getScreenName(cur),
+    time_on_modal: Math.round((Date.now() - loadTime) / 1000),
+  });
+  try {
+    if (typeof CleverTap !== 'undefined' && CleverTap.closeInApp)
+      CleverTap.closeInApp();
+  } catch (e) {}
+}
+
+init();
+</script>
+</body>
+</html>
