@@ -2,7 +2,7 @@
 
 **Client concept demo**, not a production Major Cineplex app or a CleverTap campaign deployment.
 
-Open major-cineplex/index.html from a static server. Use the EN / ไทย toggle. The interactive gallery preserves the original five concept templates and adds **six app-engagement gamification journeys**.
+Open major-cineplex/index.html from a static server. Use the EN / ไทย toggle. The interactive gallery preserves four of the original five CleverTap gallery adaptations, replaces the streaming-derived checkout recovery with a cinema-specific flow, and adds **six app-engagement gamification journeys**, four **M PASS / M GEN membership demos**, three **Priority 3.1 concession cross-selling** concepts, and one **Priority 3.2 at-home popcorn delivery** vision demo.
 
 ## Branding
 
@@ -21,7 +21,7 @@ Open major-cineplex/index.html from a static server. Use the EN / ไทย togg
 | 5 | Daily spin wheel | Return visits | Major_Daily_Wheel_Spun |
 | 6 | Film carousel | Discovery | Existing carousel tracking scaffold |
 | 7 | Genre poll | Preference enrichment | Existing poll tracking scaffold |
-| 8 | Checkout recovery | Booking conversion | Existing recovery tracking scaffold |
+| 8 | Checkout recovery | Booking conversion | Rebuilt `Major_Booking_Recovery_Clicked` |
 | 9 | Cinema passport (6 verified visits) | Repeat cinema attendance | Major_Passport_Visit_Simulated |
 | 10 | Badge wall | Loyal member recognition | Existing badge scaffold |
 | 11 | Cinema year recap | Retention / sharing | Existing recap scaffold |
@@ -30,7 +30,7 @@ The six new games live in standalone engagement.html with query parameters: mode
 
 ## Bilingual scope
 
-The showcase shell and all six new gamification demos have full English and Thai copy. The five retained upstream-derived HTML experiences preserve their own rendering and events; assets/legacy-th.js provides Thai translation for key displayed copy. **Full production editorial localisation of all upstream experiences remains required.**
+The showcase shell and all six new gamification demos have full English and Thai copy. Four retained upstream-derived HTML experiences preserve their original rendering and event scaffolds; assets/legacy-th.js supplies key Thai translations for those four. The checkout recovery was rewritten with native Thai and English content. **Full production editorial localisation of all upstream experiences remains required.**
 
 ## Demonstrating repeat usage
 
@@ -45,7 +45,7 @@ The showcase shell and all six new gamification demos have full English and Thai
 
 ## Event and production contract
 
-For the six games, track(name, properties) dispatches CustomEvent("major:demo-event") and sends a same-origin message to the parent gallery. It is **event preview only**, not actual CleverTap telemetry. The original five templates retain their existing scaffold.
+For the six games, track(name, properties) dispatches CustomEvent("major:demo-event") and sends a same-origin message to the parent gallery. It is **event preview only**, not actual CleverTap telemetry. Four upstream adaptations retain their event scaffolds. The checkout recovery has new synthetic booking and concession cross-sell events.
 
 Production work requires:
 - Real CleverTap SDK bridge, event data design, user identity/consent and profile integration.
@@ -57,7 +57,44 @@ Production work requires:
 
 ## Attribution
 
-Original five templates are adapted from [SJ Neo's CleverTap Custom HTML Template Gallery](https://github.com/shijunneo-bot/ct-template-gallery): carousel, genre poll, payment recovery, badges, year recap. The six new game designs reuse generic gamification ideas, with independent demo logic.
+The initial five templates were adapted from [SJ Neo's CleverTap Custom HTML Template Gallery](https://github.com/shijunneo-bot/ct-template-gallery): carousel, genre poll, payment recovery, badges, year recap. The checkout screen is now a new cinema-native rebuild. The six game designs reuse generic gamification ideas, with independent demo logic.
+
+## New: Membership, concession commerce and delivery (13 November 2026)
+
+### M PASS / M GEN (4 bilingual concepts)
+
+- **M PASS: value reminder**. Sample Standard package, upcoming movies, and official member concession positioning. Never implies an unlimited number of redemptions for one film. Source: user-provided current-app M PASS screens and [Major M PASS terms](https://www.majorcineplex.com/mpass/usempass.php?lang=en).
+- **M PASS: cinema upgrade**. Explore standard, IMAX or premium-seat options with explicit caveats on possible upgrade fees, package limits and participating branches. Source: supplied app screen and [Major M PASS package branches](https://www.majorcineplex.com/mpass/application.php).
+- **M GEN: membership benefit overview**. Illustrative 6/20 member-priced seats used, 14 remaining. M GEN is **not classified as a student-only programme**. Source: user-provided M GENERATION NEXT screen and [Major M GEN overview](https://web.majorcineplex.com/m-pass-m-gen).
+- **M GEN: birthday-week entitlement preview**. Simulate eligibility for a complimentary movie ticket during birthday week. This is not a real ticket and the official terms apply. Source: current-app screen and [Major member information](https://www.majorcineplex.com/member/login/home/).
+
+### Priority 3.1: Concession cross-sell (3 bilingual concepts)
+
+- **During ticket checkout**: optional popcorn, drinks and nachos with illustrative basket math; consistent with cinema ticket conversion.
+- **Post-booking, pre-show pickup**: invite ticket holders to add snacks and choose a pickup window. No real collection reference is generated.
+- **Personalised concession prompt**: the member's fictional usual order triggers a relevant add-on suggestion.
+- **Checkout recovery fixed**: original CATCHPLAY subscription copy replaced entirely. Movie, branch, showtime, seats and member context only. Removes downloads, simultaneous screens and any streaming benefits. Illustrative eight-minute timer and optional snacks; actual seat-hold window must come from ticketing.
+
+### Priority 3.2: At-home popcorn commerce (1 bilingual future-state vision)
+
+- Major app offers standalone snacks without a cinema ticket; user selects products and conceptual delivery / collection.
+- The in-app direct-order model is proposed, **not asserted as an existing Major app feature**.
+- Delivery partners such as Grab or LINE MAN are illustrative fulfilment options. This deliberately avoids API, integration, contractual and inventory implementation claims.
+- Official Major information confirms existing third-party popcorn delivery distribution; see [Major delivery announcement](https://www.majorcineplex.com/news/major-popcorn-delivery/) and [2026 promotions](https://majorcineplex.com/promotion/nano-gauntlet-popcorn-bucket-set/). No promise of active partner coverage in the proposed in-app experience.
+
+### Demo routes
+
+- membership.html?mode=mpass-value, mpass-upgrade, mgen-benefits, mgen-birthday
+- concessions.html?mode=booking, pickup, recommend, delivery
+- templates/03-checkout-recovery.html (cinema-specific rebuild)
+- Every new route accepts lang=th or lang=en. A showcase category selector separates Membership, 3.1 Concessions and 3.2 Delivery Vision, increasing the gallery to 19 interactive examples.
+
+### Commercial and product safeguards
+
+- Prices, M PASS package and M GEN seat balances are sample data. No real entitlement data is queried or updated.
+- No tickets, gift privileges, snack orders, delivery dispatches, payments, notifications or real loyalty rewards occur.
+- Buttons preview user journeys and emit only synthetic local events; real CleverTap app SDK and Major server integrations require a separate project.
+- Before sales use, verify branding approval, current membership programme validity, concession catalogue, promotion terms, eligibility, expected partner availability, booking time holds and Thai legal copy.
 
 ## Verification
 
@@ -65,8 +102,10 @@ Original five templates are adapted from [SJ Neo's CleverTap Custom HTML Templat
 - [x] Isolated branch; no DHL files or repository-root changes.
 - [x] Bilingual shell and six newly built games.
 - [x] Repeat-day and daily-limit logic implemented for synthetic local data.
-- [ ] Live GitHub Pages verification and browser/mobile screenshot QA.
-- [ ] Actual CleverTap SDK and backend QA.
+- [x] Syntax checks passed for the new membership, concessions, checkout and gallery scripts.
+- [x] Mock interactions in Thai and English covered M PASS discovery/upgrade, M GEN member-price/birthday, and cinema checkout plus optional concession toggle.
+- [ ] Full real-browser screenshot QA and verified hosted GitHub Pages serving.
+- [ ] Live CleverTap SDK, ticketing, POS and fulfilment backend QA.
 - [ ] Major / CleverTap logo and campaign approval.
 
 Expected path when hosted with GitHub Pages main/root: /clevertap/major-cineplex/. Do not claim publicly live until verified.
