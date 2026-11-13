@@ -1,0 +1,175 @@
+<!-- Adapted for a synthetic Major Cineplex sales demonstration from https://github.com/shijunneo-bot/ct-template-gallery/blob/main/templates/catchplay-badges.html . Not affiliated with Major Cineplex; no live booking or customer data. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MAJOR – Achievements</title>
+<script>
+var CONFIG = {
+  brandColor: '#F4A623',
+  brandDark: '#E68D12',
+  brandName: 'MAJOR CINEPLEX',
+  heading: 'My Major Movie Milestones',
+  eventName: 'Major_BadgeWall',
+  badges: [
+    { id: 'first_film', name: 'First Look', icon: '🎬', desc: 'Book your first movie ticket', rarity: 'Common', earned: true, date: '12 Jan 2026' },
+    { id: 'binge_3', name: 'Triple Feature', icon: '🍿', desc: 'Book 3 cinema visits', rarity: 'Uncommon', earned: true, date: '28 Jan 2026' },
+    { id: 'genre_5', name: 'Explorer', icon: '🧭', desc: 'Book tickets across 5 movie genres', rarity: 'Uncommon', earned: true, date: '03 Feb 2026' },
+    { id: 'night_owl', name: 'Night Owl', icon: '🦉', desc: 'Attend a late-night show', rarity: 'Common', earned: true, date: '15 Jan 2026' },
+    { id: 'weekend_5', name: 'Weekend Warrior', icon: '⚔️', desc: 'Visit Major five times in a weekend', rarity: 'Rare', earned: false, hint: 'Watch 5 films Fri–Sun' },
+    { id: 'asian_10', name: 'Asia Pacific', icon: '🌏', desc: 'See 10 Asian films in cinema', rarity: 'Uncommon', earned: false, hint: 'Watch 10 Asian films' },
+    { id: 'docs_5', name: 'Truth Seeker', icon: '📽️', desc: 'Attend five special screenings', rarity: 'Uncommon', earned: false, hint: 'Explore documentaries' },
+    { id: 'watchlist_10', name: 'Curator', icon: '📋', desc: 'Add 10 titles to your watchlist', rarity: 'Common', earned: false, hint: 'Build your watchlist' },
+    { id: 'share_3', name: 'Evangelist', icon: '📢', desc: 'Share 3 films with friends', rarity: 'Uncommon', earned: false, hint: 'Share films you love' },
+    { id: 'complete_series', name: 'Committed', icon: '📺', desc: 'Finish an entire series', rarity: 'Rare', earned: false, hint: 'Complete any series' },
+    { id: 'rated_20', name: 'Critic', icon: '⭐', desc: 'Rate 20 films', rarity: 'Uncommon', earned: false, hint: 'Rate more films' },
+    { id: 'streak_7', name: 'Devotee', icon: '🔥', desc: 'Visit the cinema on 7 different days', rarity: 'Rare', earned: false, hint: '7-day watch streak' },
+    { id: 'premiere', name: 'Opening Night', icon: '🎪', desc: 'Book a movie on opening day', rarity: 'Rare', earned: false, hint: 'Book an opening-night ticket' },
+    { id: 'century', name: 'Centurion', icon: '🏛️', desc: 'Book 100 movie tickets', rarity: 'Epic', earned: false, hint: 'Watch 100 films' },
+    { id: 'all_genres', name: 'Omnivore', icon: '🌈', desc: 'Watch from every genre category', rarity: 'Epic', earned: false, hint: 'Try every genre' },
+    { id: 'legend', name: 'Cinephile', icon: '🏆', desc: 'Unlock all other achievements', rarity: 'Legendary', earned: false, hint: 'Collect all badges' }
+  ]
+};
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;width:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#0A0A0F;color:#F0F4F8}
+.modal{height:100%;display:flex;flex-direction:column;overflow:hidden}
+.top{padding:20px 20px 0;flex-shrink:0}
+.close{position:absolute;top:16px;right:16px;background:none;border:none;color:#6B7A94;font-size:22px;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .15s}
+.close:hover{background:rgba(255,255,255,.06)}
+.brand{font-size:11px;font-weight:600;letter-spacing:.5px;color:#6B7A94;text-transform:uppercase;margin-bottom:12px}
+h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.count{font-size:13px;color:#6B7A94;margin-bottom:12px}
+.count b{color:#F4A623}
+.bar{width:100%;height:5px;background:#1A1A2E;border-radius:3px;overflow:hidden;margin-bottom:16px}
+.bar-fill{height:100%;border-radius:3px;background:#F4A623;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.grid-wrap{flex:1;overflow-y:auto;padding:0 20px 20px;-webkit-overflow-scrolling:touch}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.badge{display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 4px;background:#141420;border-radius:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s}
+.badge:active{transform:scale(.94)}
+.icon-ring{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;position:relative;background:#1A1A2E;transition:all .3s}
+.badge.earned .icon-ring{background:rgba(245,158,11,.1);box-shadow:0 0 16px rgba(245,158,11,.2)}
+.badge.locked .icon-ring{filter:grayscale(1) opacity(.35)}
+.badge-name{font-size:10px;color:#94A3B8;text-align:center;line-height:1.2;height:24px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.badge.locked .badge-name{color:#4A5568}
+.rarity{font-size:8px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.r-Common{color:#9CA3AF}.r-Uncommon{color:#22C55E}.r-Rare{color:#3B82F6}.r-Epic{color:#A855F7}.r-Legendary{color:#F4A623}
+/* Detail overlay */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center;padding:24px}
+.overlay.show{display:flex}
+.detail{background:#1A1A2E;border-radius:20px;padding:28px 24px;max-width:300px;width:100%;text-align:center;animation:popIn .25s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.detail .d-icon{font-size:48px;margin-bottom:12px;display:block}
+.detail.locked .d-icon{filter:grayscale(1) opacity(.4)}
+.detail h3{font-size:18px;font-weight:700;margin-bottom:4px}
+.detail .d-rarity{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;margin-bottom:10px}
+.detail .d-desc{font-size:13px;color:#94A3B8;line-height:1.45;margin-bottom:12px}
+.detail .d-date{font-size:12px;color:#6B7A94}
+.detail .d-hint{font-size:13px;color:#F4A623;padding:10px;background:rgba(245,158,11,.08);border-radius:10px;margin-bottom:8px}
+.detail .d-close{margin-top:16px;padding:10px 32px;border:none;border-radius:10px;background:rgba(255,255,255,.08);color:#F0F4F8;font-size:14px;font-weight:600;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="modal" id="modal">
+  <div class="top" style="position:relative">
+    <button class="close" id="closeBtn" aria-label="Close">×</button>
+    <div class="brand" id="brandLabel"></div>
+    <h1 id="heading"></h1>
+    <p class="count" id="count"></p>
+    <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+  </div>
+  <div class="grid-wrap">
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+<div class="overlay" id="overlay">
+  <div class="detail" id="detail"></div>
+</div>
+<script>
+(function(){
+  var bc = CONFIG.brandColor;
+  document.getElementById('brandLabel').textContent = CONFIG.brandName;
+  document.getElementById('heading').textContent = CONFIG.heading;
+
+  var badges = CONFIG.badges;
+  var total = badges.length;
+  var earned = badges.filter(function(b){ return b.earned; }).length;
+
+  document.getElementById('count').innerHTML = '<b>' + earned + '</b> of ' + total + ' unlocked';
+  document.getElementById('barFill').style.width = Math.round((earned/total)*100) + '%';
+
+  var grid = document.getElementById('grid');
+  var overlay = document.getElementById('overlay');
+
+  function fireEvent(name, props){
+    try{
+      if(window.CleverTap) window.CleverTap.pushEvent(name, props);
+      else if(window.clevertap) window.clevertap.event.push(name, props);
+    }catch(e){}
+    try{
+      if(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.clevertap){
+        window.webkit.messageHandlers.clevertap.postMessage(JSON.stringify({event:name,properties:props}));
+      }
+    }catch(e){}
+  }
+
+  badges.forEach(function(b){
+    var el = document.createElement('div');
+    el.className = 'badge ' + (b.earned ? 'earned' : 'locked');
+    el.innerHTML =
+      '<div class="icon-ring">' + b.icon + '</div>' +
+      '<span class="badge-name">' + (b.earned ? b.name : '???') + '</span>' +
+      '<span class="rarity r-' + b.rarity + '">' + b.rarity + '</span>';
+
+    el.addEventListener('click', function(){
+      fireEvent(CONFIG.eventName + '_Badge_Viewed', {
+        Badge_ID: b.id,
+        Badge_Name: b.name,
+        Rarity: b.rarity,
+        Earned: b.earned
+      });
+      showDetail(b);
+    });
+    grid.appendChild(el);
+  });
+
+  function showDetail(b){
+    var d = document.getElementById('detail');
+    d.className = 'detail' + (b.earned ? '' : ' locked');
+    var html = '<span class="d-icon">' + b.icon + '</span>' +
+      '<h3>' + b.name + '</h3>' +
+      '<div class="d-rarity r-' + b.rarity + '">' + b.rarity + '</div>' +
+      '<p class="d-desc">' + b.desc + '</p>';
+    if(b.earned){
+      html += '<p class="d-date">Unlocked ' + b.date + '</p>';
+    } else {
+      html += '<div class="d-hint">💡 ' + b.hint + '</div>';
+    }
+    html += '<button class="d-close" id="detailClose">Got it</button>';
+    d.innerHTML = html;
+    overlay.classList.add('show');
+    document.getElementById('detailClose').addEventListener('click', function(){
+      overlay.classList.remove('show');
+    });
+  }
+
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay) overlay.classList.remove('show');
+  });
+
+  fireEvent(CONFIG.eventName + '_Viewed', {
+    Earned_Count: earned,
+    Total_Badges: total,
+    Completion_Pct: Math.round((earned/total)*100)
+  });
+
+  document.getElementById('closeBtn').addEventListener('click', function(){
+    fireEvent(CONFIG.eventName + '_Dismissed', { Earned_Count: earned });
+    window.location.href = 'wzrk://exit';
+  });
+})();
+</script>
+</body>
+</html>

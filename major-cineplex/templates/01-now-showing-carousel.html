@@ -1,0 +1,200 @@
+<!-- Adapted for a synthetic Major Cineplex sales demonstration from https://github.com/shijunneo-bot/ct-template-gallery/blob/main/templates/a14-horizontal-snap-carousel.html . Not affiliated with Major Cineplex; no live booking or customer data. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    const CONFIG = {
+      includeDismissButton: true,
+      brand: { name:"MAJOR CINEPLEX", primary:"#F4A623", primaryDark:"#D9850B", accent:"#F4A623", dark:"#0A0A0A", darkCard:"#161616", white:"#FFFFFF" },
+      carousel: { headline:"Now Showing at Major", subheadline:"Discover your next big-screen moment" },
+      cards: [
+        { id:"film1", title:"The Last Horizon", subtitle:"Action · Now showing", fallbackGradient:"linear-gradient(135deg,#1a1a2e,#4a1942)", fallbackEmoji:"🎬", badge:"NEW", ctaUrl:"majorcineplex://movie/interrogation" },
+        { id:"film2", title:"Midnight Express", subtitle:"Mystery · Now showing", fallbackGradient:"linear-gradient(135deg,#0f2027,#2c5364)", fallbackEmoji:"🌃", badge:"EXCLUSIVE", ctaUrl:"majorcineplex://movie/neon-harbour" },
+        { id:"film3", title:"Summer in Bangkok", subtitle:"Romance · This weekend", fallbackGradient:"linear-gradient(135deg,#1a0000,#4a0e0e)", fallbackEmoji:"🎭", badge:null, ctaUrl:"majorcineplex://movie/still-life" },
+        { id:"film4", title:"Beyond the Stars", subtitle:"Adventure · Now showing", fallbackGradient:"linear-gradient(135deg,#0d1b2a,#1b4332)", fallbackEmoji:"🏔️", badge:"TOP 10", ctaUrl:"majorcineplex://movie/mountain-pass" },
+        { id:"film5", title:"The Great Escape", subtitle:"Sci-fi · Coming soon", fallbackGradient:"linear-gradient(135deg,#1a0033,#3d0066)", fallbackEmoji:"🔮", badge:"COMING SOON", ctaUrl:"majorcineplex://movie/pulse/remind" },
+        { id:"film6", title:"Family Weekend", subtitle:"Animation · Family favourites", fallbackGradient:"linear-gradient(135deg,#2d1810,#5c3d2e)", fallbackEmoji:"🎨", badge:null, ctaUrl:"majorcineplex://movie/paper-boats" },
+      ],
+      cardStyle: { width:220, height:310, borderRadius:20, gap:14 },
+      events: { carouselViewed:"SnapCarousel_Viewed", cardViewed:"SnapCarousel_Card_Viewed", cardTapped:"SnapCarousel_Card_Tapped", carouselDismissed:"SnapCarousel_Dismissed" },
+    };
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary:#F4A623;--dark:#0A0A0A;--text:#FFF;--text-muted:rgba(255,255,255,.5);--cw:220px;--ch:310px;--cr:20px;--cg:14px}
+    body{background:var(--dark);min-height:100vh;display:flex;flex-direction:column;justify-content:center;font-family:'Sora',sans-serif;color:var(--text);padding:40px 0 32px;overflow:hidden}
+    .dismiss{position:fixed;top:12px;right:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:18px;cursor:pointer;z-index:100;display:flex;align-items:center;justify-content:center}.dismiss:active{transform:scale(.9)}
+    @keyframes fadeIn{to{opacity:1}}
+    .header{padding:0 24px;margin-bottom:20px}
+    .h-headline{font-size:22px;font-weight:800;margin-bottom:4px;opacity:0;animation:fadeIn .5s .2s ease forwards}
+    .h-sub{font-size:13px;color:var(--text-muted);opacity:0;animation:fadeIn .5s .35s ease forwards}
+
+    .carousel-wrap{position:relative;width:100%;opacity:0;animation:fadeIn .6s .4s ease forwards}
+    .carousel-track{display:flex;gap:var(--cg);padding:8px 24px 16px;will-change:transform;cursor:grab;-webkit-user-select:none;user-select:none}
+    .carousel-track.dragging{cursor:grabbing}
+
+    .card{flex-shrink:0;width:var(--cw);height:var(--ch);border-radius:var(--cr);position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent;box-shadow:0 8px 30px rgba(0,0,0,.4);transition:transform .25s ease}
+    .card:active{transform:scale(.97)}
+    .card-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+    .card-emoji{font-size:64px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3))}
+    .card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.2) 40%,transparent 70%)}
+    .card::before{content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);z-index:3}
+    .card-badge{position:absolute;top:14px;left:14px;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;z-index:3}
+    .card-badge.red{background:var(--primary);color:var(--text)}.card-badge.gold{background:#F4A623;color:#000}.card-badge.grey{background:rgba(255,255,255,.15);color:var(--text)}
+    .card-content{position:absolute;bottom:0;left:0;right:0;padding:20px 16px;z-index:2}
+    .card-title{font-size:17px;font-weight:800;line-height:1.2;margin-bottom:4px}
+    .card-subtitle{font-size:12px;color:rgba(255,255,255,.6);line-height:1.4}
+
+    .dots{display:flex;justify-content:center;gap:6px;margin-top:8px;padding:0 24px}
+    .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15);transition:all .3s ease}.dot.active{width:20px;border-radius:3px;background:var(--primary)}
+
+    .swipe-hint{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11px;color:rgba(255,255,255,.2);margin-top:14px;letter-spacing:.5px;opacity:0;animation:fadeIn .5s 1s ease forwards;transition:opacity .3s}.swipe-hint.hidden{opacity:0!important}
+    .hint-arrow{animation:hintSlide 1.5s ease-in-out infinite}@keyframes hintSlide{0%,100%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+
+    .carousel-wrap::before,.carousel-wrap::after{content:'';position:absolute;top:0;bottom:0;width:20px;z-index:5;pointer-events:none}
+    .carousel-wrap::before{left:0;background:linear-gradient(to right,var(--dark),transparent)}
+    .carousel-wrap::after{right:0;background:linear-gradient(to left,var(--dark),transparent)}
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2 class="h-headline" id="headline"></h2>
+    <p class="h-sub" id="sub"></p>
+  </div>
+  <div class="carousel-wrap">
+    <div class="carousel-track" id="track"></div>
+  </div>
+  <div class="dots" id="dots"></div>
+  <div class="swipe-hint" id="swipeHint"><span class="hint-arrow">← →</span> Swipe to browse</div>
+
+  <script>
+    function fireEvent(n,p){try{if(window.CleverTap)window.CleverTap.pushEvent(n,p||{});else if(window.webkit?.messageHandlers?.clevertap)window.webkit.messageHandlers.clevertap.postMessage(JSON.stringify({event:n,properties:p||{}}));else if(window.clevertap)window.clevertap.event.push(n,p||{})}catch(e){console.log("CT:",n,p)}}
+    function dismiss(){fireEvent(CONFIG.events.carouselDismissed);try{location.href="wzrk://exit"}catch(e){}}
+
+    const viewed=new Set();
+    let activeIdx=0;
+
+    // Drag state
+    let isDrag=false, dragStartX=0, dragScrollLeft=0, dragMoved=false;
+
+    (function init(){
+      document.documentElement.style.setProperty("--primary",CONFIG.brand.primary);
+      document.documentElement.style.setProperty("--cw",CONFIG.cardStyle.width+"px");
+      document.documentElement.style.setProperty("--ch",CONFIG.cardStyle.height+"px");
+      document.documentElement.style.setProperty("--cr",CONFIG.cardStyle.borderRadius+"px");
+      document.documentElement.style.setProperty("--cg",CONFIG.cardStyle.gap+"px");
+
+      if(CONFIG.includeDismissButton){const b=document.createElement("button");b.className="dismiss";b.innerHTML="✕";b.onclick=dismiss;document.body.appendChild(b)}
+
+      document.getElementById("headline").textContent=CONFIG.carousel.headline;
+      document.getElementById("sub").textContent=CONFIG.carousel.subheadline;
+
+      const track=document.getElementById("track");
+
+      CONFIG.cards.forEach((card,i)=>{
+        const el=document.createElement("div");el.className="card";el.dataset.index=i;el.dataset.id=card.id;
+
+        let badgeHtml="";
+        if(card.badge){
+          let bc="grey";
+          if(["NEW","EXCLUSIVE"].includes(card.badge))bc="red";
+          if(["TOP 10","COMING SOON"].includes(card.badge))bc="gold";
+          badgeHtml=`<span class="card-badge ${bc}">${card.badge}</span>`;
+        }
+
+        el.innerHTML=`
+          <div class="card-bg" style="background:${card.fallbackGradient}"><span class="card-emoji">${card.fallbackEmoji}</span></div>
+          <div class="card-overlay"></div>
+          ${badgeHtml}
+          <div class="card-content"><div class="card-title">${card.title}</div><div class="card-subtitle">${card.subtitle}</div></div>`;
+
+        el.addEventListener("click",()=>{
+          if(dragMoved)return; // ignore clicks from drag
+          fireEvent(CONFIG.events.cardTapped,{card_id:card.id,card_title:card.title});
+          if(card.ctaUrl)location.href=card.ctaUrl;
+        });
+
+        track.appendChild(el);
+      });
+
+      // Dots
+      const dotsEl=document.getElementById("dots");
+      CONFIG.cards.forEach((_,i)=>{const d=document.createElement("div");d.className="dot"+(i===0?" active":"");d.dataset.i=i;dotsEl.appendChild(d)});
+
+      // ── Native drag-to-scroll on track ──
+      track.addEventListener("pointerdown",e=>{
+        isDrag=true;dragMoved=false;
+        dragStartX=e.clientX;
+        dragScrollLeft=track.scrollLeft||0;
+        track.setPointerCapture(e.pointerId);
+        track.classList.add("dragging");
+        track.style.scrollBehavior="auto";
+      });
+
+      track.addEventListener("pointermove",e=>{
+        if(!isDrag)return;
+        const dx=e.clientX-dragStartX;
+        if(Math.abs(dx)>5)dragMoved=true;
+        track.scrollLeft=dragScrollLeft-dx;
+      });
+
+      const endDrag=()=>{
+        if(!isDrag)return;
+        isDrag=false;
+        track.classList.remove("dragging");
+        // Snap to nearest card
+        const cardW=CONFIG.cardStyle.width+CONFIG.cardStyle.gap;
+        const nearest=Math.round(track.scrollLeft/cardW);
+        track.style.scrollBehavior="smooth";
+        track.scrollLeft=nearest*cardW;
+        updateActiveCard(nearest);
+      };
+
+      track.addEventListener("pointerup",endDrag);
+      track.addEventListener("pointercancel",endDrag);
+
+      // Also handle native scroll (for devices where touch scroll works natively)
+      track.style.overflowX="auto";
+      track.style.scrollSnapType="x mandatory";
+      track.style.scrollPaddingLeft="24px";
+      track.style.webkitOverflowScrolling="touch";
+      track.style.scrollbarWidth="none";
+
+      // Apply snap to cards
+      document.querySelectorAll(".card").forEach(c=>c.style.scrollSnapAlign="center");
+
+      // Scroll listener for dot update
+      let scrollTimeout;
+      track.addEventListener("scroll",()=>{
+        clearTimeout(scrollTimeout);
+        scrollTimeout=setTimeout(()=>{
+          const cardW=CONFIG.cardStyle.width+CONFIG.cardStyle.gap;
+          const nearest=Math.round(track.scrollLeft/cardW);
+          updateActiveCard(Math.min(nearest,CONFIG.cards.length-1));
+        },80);
+
+        // Hide hint
+        document.getElementById("swipeHint").classList.add("hidden");
+      },{passive:true});
+
+      viewed.add(CONFIG.cards[0].id);
+      fireEvent(CONFIG.events.carouselViewed,{card_count:CONFIG.cards.length});
+      fireEvent(CONFIG.events.cardViewed,{card_id:CONFIG.cards[0].id,card_title:CONFIG.cards[0].title,card_index:0});
+    })();
+
+    function updateActiveCard(i){
+      if(i===activeIdx&&viewed.has(CONFIG.cards[i].id))return;
+      activeIdx=i;
+      document.querySelectorAll(".dot").forEach((d,di)=>d.classList.toggle("active",di===i));
+      const card=CONFIG.cards[i];
+      if(card&&!viewed.has(card.id)){
+        viewed.add(card.id);
+        fireEvent(CONFIG.events.cardViewed,{card_id:card.id,card_title:card.title,card_index:i});
+      }
+    }
+  </script>
+</body>
+</html>
