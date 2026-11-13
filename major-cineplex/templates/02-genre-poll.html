@@ -1,0 +1,742 @@
+<!-- Adapted for a synthetic Major Cineplex sales demonstration from https://github.com/shijunneo-bot/ct-template-gallery/blob/main/templates/catchplay-poll.html . Not affiliated with Major Cineplex; no live booking or customer data. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script>
+    const CONFIG = {
+      includeDismissButton: true,
+
+      brand: {
+        name: "MAJOR CINEPLEX",
+        tagline: "For Movie Lovers, By Movie Lovers",
+        black: "#0A0A0F",
+        charcoal: "#141420",
+        darkPurple: "#1A1A2E",
+        amber: "#F4A623",
+        amberDark: "#E68D12",
+        amberLight: "#FDE68A",
+        gold: "#FFD700",
+        white: "#FFFFFF",
+        grey: "#94A3B8",
+        blue: "#3B82F6",
+      },
+
+      // 🎬 Poll question and options
+      poll: {
+        question: "สุดสัปดาห์นี้อยากดูหนังแนวไหน?",
+        questionEn: "Which movie genre should we recommend?",
+        subtitle: "โหวตแล้วดูผลทันที",
+        subtitleEn: "Vote to shape your next movie recommendation!",
+
+        options: [
+          {
+            id: "scifi",
+            emoji: "🚀",
+            label: "ไซไฟ / แอ็กชัน",
+            labelEn: "Sci-Fi Blockbuster",
+            // Pre-seeded vote distribution (before user votes)
+            votes: 84,
+            color: "#3B82F6",    // blue
+          },
+          {
+            id: "thriller",
+            emoji: "🔪",
+            label: "ระทึกขวัญ",
+            labelEn: "Thriller / Suspense",
+            votes: 127,
+            color: "#EF4444",    // red
+          },
+          {
+            id: "romance",
+            emoji: "💕",
+            label: "โรแมนติก",
+            labelEn: "Romance",
+            votes: 65,
+            color: "#EC4899",    // pink
+          },
+          {
+            id: "asian_drama",
+            emoji: "🎭",
+            label: "คอมเมดี้ / ครอบครัว",
+            labelEn: "Comedy / Family",
+            votes: 101,
+            color: "#F4A623",    // amber
+          },
+        ],
+      },
+
+      // Social positioning messages
+      messages: {
+        majority: "🎉 你和大多數人想法一致!",
+        majorityEn: "You voted with the majority!",
+        minority: "😎 你的品味很獨特!",
+        minorityEn: "You've got unique taste!",
+      },
+
+      cta: {
+        text: "ดูหนังที่เมเจอร์",
+        textEn: "Explore Movies",
+        url: "https://www.majorcineplex.com/",
+      },
+
+      events: {
+        pollViewed:    "Poll_Viewed",
+        pollVoted:     "Poll_Voted",
+        pollShared:    "Poll_Shared",
+        pollCta:       "Poll_CTA_Clicked",
+        pollDismissed: "Poll_Dismissed",
+      },
+    };
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MAJOR CINEPLEX — Poll</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%; height: 100%;
+      font-family: 'Inter', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+      background: #0A0A0F;
+    }
+
+    .modal {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 20px;
+      position: relative; overflow: hidden;
+      background: linear-gradient(170deg, #0A0A0F 0%, #141420 40%, #0A0A0F 100%);
+    }
+
+    /* Cinema grain texture overlay */
+    .modal::before {
+      content: '';
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 100%, rgba(59,130,246,0.03) 0%, transparent 50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Subtle film reel light leak */
+    .modal::after {
+      content: '';
+      position: fixed; top: -50%; right: -30%;
+      width: 60%; height: 200%;
+      background: radial-gradient(ellipse, rgba(245,158,11,0.02) 0%, transparent 70%);
+      transform: rotate(-15deg);
+      pointer-events: none; z-index: 0;
+    }
+
+    .dismiss-btn {
+      position: absolute; top: 14px; right: 14px;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); border: none;
+      color: rgba(255,255,255,0.4); font-size: 14px;
+      cursor: pointer; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .content {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 380px;
+    }
+
+    /* =============================================
+       HEADER
+       ============================================= */
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .brand-mark {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-bottom: 14px;
+    }
+    .brand-mark span {
+      font-size: 13px; font-weight: 800;
+      color: #F4A623;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .poll-icon {
+      font-size: 36px; margin-bottom: 10px;
+    }
+
+    .poll-question {
+      font-size: 20px; font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.3; margin-bottom: 4px;
+    }
+    .poll-question-en {
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 8px;
+    }
+
+    .poll-subtitle {
+      font-size: 12px; font-weight: 400;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.4;
+    }
+
+    /* =============================================
+       VOTE OPTIONS (pre-vote)
+       ============================================= */
+    .options-list {
+      display: flex; flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .vote-option {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.08);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: all 0.25s ease;
+      position: relative; overflow: hidden;
+    }
+    .vote-option:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.12);
+    }
+    .vote-option:active { transform: scale(0.98); }
+
+    .vo-emoji {
+      font-size: 24px; flex-shrink: 0;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.04);
+      border-radius: 10px;
+    }
+
+    .vo-label {
+      flex: 1;
+    }
+    .vo-label-zh {
+      font-size: 15px; font-weight: 600;
+      color: #FFFFFF;
+    }
+    .vo-label-en {
+      font-size: 11px; font-weight: 400;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .vo-arrow {
+      font-size: 14px; color: rgba(255,255,255,0.15);
+      transition: transform 0.2s ease;
+    }
+    .vote-option:hover .vo-arrow { transform: translateX(2px); }
+
+    /* =============================================
+       RESULTS (post-vote) — hidden initially
+       ============================================= */
+    .results-container {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .results-container.show {
+      display: flex;
+      animation: resultsIn 0.4s ease forwards;
+    }
+    @keyframes resultsIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-row {
+      position: relative;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+
+    /* Selected option highlight */
+    .result-row.selected {
+      border-color: rgba(245,158,11,0.4);
+      background: rgba(245,158,11,0.04);
+    }
+
+    /* Animated bar behind content */
+    .result-bar {
+      position: absolute; top: 0; left: 0;
+      height: 100%;
+      width: 0%;
+      border-radius: 12px;
+      opacity: 0.12;
+      transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .result-content {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .rc-emoji {
+      font-size: 22px; flex-shrink: 0;
+    }
+
+    .rc-info { flex: 1; }
+    .rc-label {
+      font-size: 14px; font-weight: 600;
+      color: #FFFFFF;
+      line-height: 1.3;
+    }
+    .rc-sublabel {
+      font-size: 10px; font-weight: 400;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .rc-stats {
+      text-align: right; flex-shrink: 0;
+    }
+    .rc-pct {
+      font-size: 20px; font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+    .rc-votes {
+      font-size: 10px; font-weight: 500;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Your vote indicator */
+    .your-vote {
+      display: none;
+      font-size: 8px; font-weight: 700;
+      color: #F4A623;
+      background: rgba(245,158,11,0.15);
+      padding: 2px 6px; border-radius: 4px;
+      margin-left: 6px;
+      letter-spacing: 0.5px;
+      vertical-align: middle;
+    }
+    .result-row.selected .your-vote { display: inline; }
+
+    /* =============================================
+       SOCIAL MESSAGE
+       ============================================= */
+    .social-msg {
+      display: none;
+      text-align: center;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(245,158,11,0.06);
+      border: 1px solid rgba(245,158,11,0.12);
+      margin-bottom: 16px;
+    }
+    .social-msg.show {
+      display: block;
+      animation: resultsIn 0.5s ease 0.6s forwards;
+      opacity: 0;
+    }
+    .social-msg .msg-zh {
+      font-size: 14px; font-weight: 600;
+      color: #FFFFFF;
+    }
+    .social-msg .msg-en {
+      font-size: 11px; font-weight: 400;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* Total votes */
+    .total-votes {
+      display: none;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .total-votes.show {
+      display: block;
+      animation: resultsIn 0.4s ease 0.3s forwards;
+      opacity: 0;
+    }
+    .total-votes span {
+      font-size: 11px; font-weight: 600;
+      color: rgba(255,255,255,0.25);
+    }
+    .total-votes .count {
+      color: #F4A623;
+      font-weight: 700;
+    }
+
+    /* =============================================
+       FOOTER ACTIONS
+       ============================================= */
+    .footer-actions {
+      display: none;
+      gap: 10px;
+    }
+    .footer-actions.show {
+      display: flex;
+      animation: resultsIn 0.4s ease 0.8s forwards;
+      opacity: 0;
+    }
+
+    .btn {
+      flex: 1; padding: 13px 16px;
+      border-radius: 12px; border: none;
+      font-family: inherit;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: #F4A623; color: #0A0A0F;
+      box-shadow: 0 4px 15px rgba(245,158,11,0.25);
+    }
+    .btn-primary:hover {
+      background: #E68D12;
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Pre-vote footer */
+    .pre-vote-footer {
+      text-align: center;
+    }
+    .pvf-text {
+      font-size: 11px; font-weight: 500;
+      color: rgba(255,255,255,0.2);
+    }
+    .pvf-text span { color: rgba(245,158,11,0.5); }
+
+    #confettiCanvas {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 999;
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+
+<body>
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="modal" id="modal">
+    <button class="dismiss-btn" id="dismissBtn" onclick="dismiss()">✕</button>
+
+    <div class="content">
+      <!-- Header -->
+      <div class="header">
+        <div class="brand-mark">
+          <span>MAJOR CINEPLEX</span>
+        </div>
+        <div class="poll-icon">🎬</div>
+        <div class="poll-question" id="pollQuestion"></div>
+        <div class="poll-question-en" id="pollQuestionEn"></div>
+        <div class="poll-subtitle" id="pollSubtitle"></div>
+      </div>
+
+      <!-- Vote Options (pre-vote) -->
+      <div class="options-list" id="optionsList"></div>
+
+      <!-- Results (post-vote) -->
+      <div class="results-container" id="resultsContainer"></div>
+
+      <!-- Total votes -->
+      <div class="total-votes" id="totalVotes">
+        <span>共 <span class="count" id="totalCount">0</span> 人已投票</span>
+      </div>
+
+      <!-- Social message -->
+      <div class="social-msg" id="socialMsg">
+        <div class="msg-zh" id="msgZh"></div>
+        <div class="msg-en" id="msgEn"></div>
+      </div>
+
+      <!-- Pre-vote footer -->
+      <div class="pre-vote-footer" id="preVoteFooter">
+        <span class="pvf-text">投票後立即查看 <span>即時結果</span></span>
+      </div>
+
+      <!-- Post-vote actions -->
+      <div class="footer-actions" id="footerActions">
+        <button class="btn btn-primary" onclick="ctaClick()">ดูหนังที่เมเจอร์</button>
+        <button class="btn btn-ghost" onclick="shareVote()">分享</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // =============================================
+    // STATE
+    // =============================================
+    const poll = CONFIG.poll;
+    const options = poll.options;
+    let hasVoted = false;
+    let userChoice = null;
+
+    if (!CONFIG.includeDismissButton) {
+      document.getElementById('dismissBtn').classList.add('hidden');
+    }
+
+    // =============================================
+    // BUILD POLL
+    // =============================================
+    function init() {
+      document.getElementById('pollQuestion').textContent = poll.question;
+      document.getElementById('pollQuestionEn').textContent = poll.questionEn;
+      document.getElementById('pollSubtitle').textContent = poll.subtitle;
+
+      buildOptions();
+    }
+
+    function buildOptions() {
+      const list = document.getElementById('optionsList');
+      list.innerHTML = '';
+
+      options.forEach((opt, i) => {
+        const el = document.createElement('div');
+        el.className = 'vote-option';
+        el.dataset.id = opt.id;
+        el.style.animationDelay = `${i * 0.05}s`;
+        el.onclick = () => castVote(opt.id);
+
+        el.innerHTML = `
+          <div class="vo-emoji">${opt.emoji}</div>
+          <div class="vo-label">
+            <div class="vo-label-zh">${opt.label}</div>
+            <div class="vo-label-en">${opt.labelEn}</div>
+          </div>
+          <span class="vo-arrow">›</span>
+        `;
+
+        list.appendChild(el);
+      });
+    }
+
+    // =============================================
+    // CAST VOTE
+    // =============================================
+    function castVote(optionId) {
+      if (hasVoted) return;
+      hasVoted = true;
+      userChoice = optionId;
+
+      // Add user's vote to the count
+      const chosen = options.find(o => o.id === optionId);
+      if (chosen) chosen.votes += 1;
+
+      // Brief highlight on selected
+      const selectedEl = document.querySelector(`[data-id="${optionId}"]`);
+      if (selectedEl) {
+        selectedEl.style.borderColor = '#F4A623';
+        selectedEl.style.background = 'rgba(245,158,11,0.08)';
+      }
+
+      // Transition to results after brief delay
+      setTimeout(() => {
+        document.getElementById('optionsList').style.display = 'none';
+        document.getElementById('preVoteFooter').style.display = 'none';
+        showResults();
+      }, 400);
+
+      // Fire event
+      pushEvent(CONFIG.events.pollVoted, {
+        Choice_ID: optionId,
+        Choice_Label: chosen?.label || '',
+      });
+    }
+
+    // =============================================
+    // RESULTS
+    // =============================================
+    function showResults() {
+      const container = document.getElementById('resultsContainer');
+      container.innerHTML = '';
+
+      const totalVotes = options.reduce((sum, o) => sum + o.votes, 0);
+
+      // Sort by votes descending for results
+      const sorted = [...options].sort((a, b) => b.votes - a.votes);
+      const winnerID = sorted[0].id;
+      const isUserMajority = userChoice === winnerID;
+
+      sorted.forEach((opt, i) => {
+        const pct = ((opt.votes / totalVotes) * 100).toFixed(1);
+        const isSelected = opt.id === userChoice;
+
+        const row = document.createElement('div');
+        row.className = 'result-row' + (isSelected ? ' selected' : '');
+        row.style.animationDelay = `${i * 0.1}s`;
+
+        row.innerHTML = `
+          <div class="result-bar" style="background: ${opt.color};" data-width="${pct}"></div>
+          <div class="result-content">
+            <span class="rc-emoji">${opt.emoji}</span>
+            <div class="rc-info">
+              <span class="rc-label">${opt.label} <span class="your-vote">YOUR VOTE</span></span>
+              <span class="rc-sublabel">${opt.labelEn}</span>
+            </div>
+            <div class="rc-stats">
+              <div class="rc-pct" data-target="${pct}">0%</div>
+              <div class="rc-votes">${opt.votes.toLocaleString()} 票</div>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(row);
+      });
+
+      container.classList.add('show');
+
+      // Animate bars and percentages after a beat
+      setTimeout(() => {
+        container.querySelectorAll('.result-bar').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+
+        container.querySelectorAll('.rc-pct').forEach(el => {
+          animateCounter(el, 0, parseFloat(el.dataset.target), 1000, '%');
+        });
+      }, 150);
+
+      // Show total votes
+      const totalEl = document.getElementById('totalVotes');
+      totalEl.classList.add('show');
+      setTimeout(() => {
+        animateCounter(
+          document.getElementById('totalCount'),
+          0, totalVotes, 800, '', true
+        );
+      }, 400);
+
+      // Social message
+      const msgEl = document.getElementById('socialMsg');
+      document.getElementById('msgZh').textContent = isUserMajority
+        ? CONFIG.messages.majority
+        : CONFIG.messages.minority;
+      document.getElementById('msgEn').textContent = isUserMajority
+        ? CONFIG.messages.majorityEn
+        : CONFIG.messages.minorityEn;
+      msgEl.classList.add('show');
+
+      // Footer actions
+      document.getElementById('footerActions').classList.add('show');
+
+      // Subtitle update
+      document.getElementById('pollSubtitle').textContent = '感謝你的投票!以下是即時結果 👇';
+    }
+
+    // =============================================
+    // ANIMATED COUNTER
+    // =============================================
+    function animateCounter(el, from, to, duration, suffix, isInt) {
+      const start = performance.now();
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = from + (to - from) * eased;
+
+        if (isInt) {
+          el.textContent = Math.round(current).toLocaleString() + suffix;
+        } else {
+          el.textContent = current.toFixed(1) + suffix;
+        }
+
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // =============================================
+    // ACTIONS
+    // =============================================
+    window.ctaClick = function () {
+      pushEvent(CONFIG.events.pollCta, { Choice: userChoice });
+      if (CONFIG.cta.url) window.location.href = CONFIG.cta.url;
+    };
+
+    window.shareVote = function () {
+      const chosen = options.find(o => o.id === userChoice);
+      pushEvent(CONFIG.events.pollShared, {
+        Choice_ID: userChoice,
+        Choice_Label: chosen?.label || '',
+      });
+
+      // Share API or copy
+      const text = `我在 MAJOR CINEPLEX 投了「${chosen?.label}」— 你呢?`;
+      if (navigator.share) {
+        navigator.share({ text }).catch(() => {});
+      } else {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+          document.body.appendChild(ta); ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+        } catch (e) {}
+      }
+    };
+
+    window.dismiss = function () {
+      pushEvent(CONFIG.events.pollDismissed, {
+        Voted: hasVoted,
+        Choice: userChoice,
+      });
+      try {
+        if (typeof CleverTap !== 'undefined' && CleverTap.dismissInAppNotification) {
+          CleverTap.dismissInAppNotification(); return;
+        }
+      } catch (e) {}
+      window.location.href = 'wzrk://exit';
+    };
+
+    // =============================================
+    // CLEVERTAP
+    // =============================================
+    function pushEvent(name, props) {
+      const payload = props || {};
+      payload.Timestamp = new Date().toISOString();
+      try {
+        if (typeof CleverTap !== 'undefined' && CleverTap.pushEvent)
+          CleverTap.pushEvent(name, JSON.stringify(payload));
+        if (typeof clevertap !== 'undefined' && clevertap.event)
+          clevertap.event.push(name, payload);
+        if (window.webkit?.messageHandlers?.clevertap)
+          window.webkit.messageHandlers.clevertap.postMessage(JSON.stringify({ type: 'event', name, props: payload }));
+      } catch (e) { console.log('[CT]', name, payload); }
+    }
+
+    // =============================================
+    // INIT
+    // =============================================
+    init();
+    pushEvent(CONFIG.events.pollViewed, {
+      Question: poll.question,
+      Options: options.map(o => o.id),
+    });
+  </script>
+</body>
+</html>
