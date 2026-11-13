@@ -1,0 +1,26 @@
+/* Thai display bridge for retained SJ Neo CleverTap HTML prototypes.
+ * Purpose: localise user-visible copy without changing the source template's tracking scaffolding.
+ * Production localisation should instead be applied to approved CONFIG and campaign data.
+ */
+(function(){
+'use strict';
+const q=new URLSearchParams(location.search);if(q.get('lang')!=='th')return;
+document.documentElement.lang='th';
+const translations=[
+['Now Showing at Major','โปรแกรมหนังที่เมเจอร์'],['Discover your next big-screen moment','ค้นหาหนังเรื่องต่อไปที่คุณอยากดู'],['Swipe to browse','เลื่อนดูหนังเพิ่มเติม'],
+['Action · Now showing','แอ็กชัน · กำลังฉาย'],['Mystery · Now showing','สืบสวน · กำลังฉาย'],['Romance · This weekend','โรแมนติก · สุดสัปดาห์นี้'],['Adventure · Now showing','ผจญภัย · กำลังฉาย'],['Sci-fi · Coming soon','ไซไฟ · เร็ว ๆ นี้'],['Animation · Family favourites','แอนิเมชัน · หนังสำหรับครอบครัว'],
+['Which movie genre should we recommend?','อยากให้เราแนะนำหนังแนวไหน?'],['Vote to shape your next movie recommendation!','ร่วมโหวตเพื่อรับคำแนะนำหนังที่ตรงใจ'],['Sci-Fi Blockbuster','ไซไฟ'],['Thriller / Suspense','ระทึกขวัญ'],['Comedy / Family','ตลก / ครอบครัว'],['Explore Movies','สำรวจหนัง'],['Share Results','แชร์ผลโหวต'],['Vote Now','โหวตเลย'],['Vote','โหวต'],['Results','ผลโหวต'],['What do you think?','คุณคิดว่าอย่างไร?'],['People voted','คนร่วมโหวต'],['人已投票',' คนโหวตแล้ว'],['投票後立即查看','โหวตแล้วดูผลทันที'],['即時結果','ผลโหวตทันที'],
+['Your movie booking is almost complete','จองตั๋วหนังอีกนิดเดียวก็สำเร็จ'],['Your Premium booking will be paused unless we can process your payment','โปรดทำรายการชำระเงินเพื่อดำเนินการจองต่อ'],['Return to Checkout','กลับไปหน้าชำระเงิน'],['Remind me later','เตือนฉันทีหลัง'],['What you\'ll lose','สิ่งที่อาจพลาด'],['Your selected cinema seats','ที่นั่งที่เลือกไว้'],['Your preferred showtime','รอบฉายที่คุณเลือก'],['Your selected movie and cinema','ภาพยนตร์และโรงที่เลือกไว้'],['Payment failed','การชำระเงินไม่สำเร็จ'],['Your payment didn\'t go through','ชำระเงินยังไม่สำเร็จ'],['Almost there!','อีกนิดเดียว!'],
+['My Major Movie Milestones','เหรียญความสำเร็จคนรักหนัง'],['Your Achievements','เหรียญความสำเร็จของคุณ'],['Achievements','ความสำเร็จ'],['Completed','สำเร็จแล้ว'],['Locked','ยังไม่ปลดล็อก'],['Earned','ได้รับแล้ว'],['View All','ดูทั้งหมด'],['First Look','ครั้งแรกกับเมเจอร์'],['Triple Feature','สามเรื่องติด'],['Explorer','นักสำรวจแนวหนัง'],['Night Owl','คนนอนดึก'],['Opening Night','รอบเปิดตัว'],['Weekend Warrior','สายหนังสุดสัปดาห์'],
+['YOUR YEAR IN','เรื่องราวปีแห่ง'],['MOVIES','ภาพยนตร์'],['Every frame you watched.','ทุกฉากที่คุณได้สัมผัส'],['Every story you lived.','ทุกเรื่องราวที่คุณได้ร่วมเดินทาง'],['Tap to begin →','แตะเพื่อเริ่ม →'],['Total Screen Time','เวลาชมหนังทั้งหมด'],['HOURS','ชั่วโมง'],['Cinema Visits','จำนวนครั้งที่ไปดูหนัง'],['FILMS','เรื่อง'],['Your #1 Genre','แนวหนังอันดับหนึ่งของคุณ'],['Your Favourite Star','นักแสดงคนโปรด'],['Your Go-To Director','ผู้กำกับคนโปรด'],['After-Midnight Cinema','ดูหนังยามดึก'],['LATE NIGHTS','คืนดึก'],['MY 2026 IN MOVIES','ปี 2026 กับโลกภาพยนตร์ของฉัน'],['Hours watched','ชั่วโมงที่ชม'],['Visits','ครั้ง'],['#1 Genre','แนวหนังโปรด'],['Fav Star','นักแสดงโปรด'],['Fav Director','ผู้กำกับโปรด'],['Late Nights','คืนดึก'],['My 2026 Movie Mood','สไตล์การดูหนังในปี 2026'],['Share My 2026 Wrapped','แชร์เรื่องราวปี 2026'],['↻ Replay Recap','↻ ดูอีกครั้ง'],['Intro','เริ่มต้น'],['Time','เวลา'],['Count','จำนวน'],['Genre','แนวหนัง'],['Actor','นักแสดง'],['Director','ผู้กำกับ'],['Night','กลางคืน'],['Summary','สรุป'],['Top Genre','แนวหนังโปรด'],['Movie Lover','คนรักหนัง'],['presents','ขอนำเสนอ'],['of non-stop cinema. You really committed.','แห่งความสนุกในโรงภาพยนตร์'],['That\'s','เท่ากับ'],['You watched','คุณได้ชม'],['of their cinema visits this year. True devotion.','ครั้งในปีนี้'],['at the movies','ที่โรงภาพยนตร์'],['Your longest session was','ช่วงเวลาชมหนังยาวนานที่สุดของคุณคือ'],['Tap to continue','แตะเพื่อไปต่อ']
+];
+const mapping=new Map(translations);
+function translate(s){if(!s||!s.trim())return s;const trimmed=s.trim();if(mapping.has(trimmed))return s.replace(trimmed,mapping.get(trimmed));let next=s;for(const [en,th] of translations){if(en.length>=9&&next.includes(en))next=next.split(en).join(th)}return next}
+let busy=false;
+function pass(){busy=false;const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;let count=0;while((node=walker.nextNode())&&count<4000){count++;if(!node.nodeValue.trim()||/^(STYLE|SCRIPT|NOSCRIPT)$/.test(node.parentElement?.tagName))continue;const result=translate(node.nodeValue);if(result!==node.nodeValue)node.nodeValue=result}
+document.querySelectorAll('[placeholder],[aria-label]').forEach(node=>{for(const attr of ['placeholder','aria-label'])if(node.hasAttribute(attr)){const val=node.getAttribute(attr),changed=translate(val);if(val!==changed)node.setAttribute(attr,changed)}});
+}
+function schedule(){if(!busy){busy=true;requestAnimationFrame(pass)}}
+new MutationObserver(schedule).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+document.addEventListener('DOMContentLoaded',schedule);schedule();
+})();
