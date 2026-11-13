@@ -28,7 +28,7 @@ function emit(event,props){if(window.parent!==window)window.parent.postMessage({
 id('add').onclick=()=>{added=!added;update();emit('Major_Concession_CrossSell_Toggled',{added,scenario:'booking_recovery'})};
 id('continue').onclick=()=>{id('result').className='result';id('result').textContent=t('complete');emit('Major_Booking_Recovery_Clicked',{with_combo:added})};
 id('remind').onclick=()=>{id('result').className='result';id('result').textContent=t('reminded');emit('Major_Booking_Reminder_Simulated',{with_combo:added})};
-setInterval(()=>{secs=secs>0?secs-1:8*60;id('clock').textContent=String(Math.floor(secs/60)).padStart(2,'0')+':'+String(secs%60).padStart(2,'0')},1000);
+setInterval(()=>{if(secs>0)secs--;id('clock').textContent=String(Math.floor(secs/60)).padStart(2,'0')+':'+String(secs%60).padStart(2,'0')},1000);
 emit('Major_Booking_Recovery_Viewed');
 })();
 </script></body></html>
