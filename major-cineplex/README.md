@@ -2,7 +2,7 @@
 
 **Client concept demo**, not a production Major Cineplex app or a CleverTap campaign deployment.
 
-Open major-cineplex/index.html from a static server. Use the EN / ไทย toggle. The interactive gallery preserves the original five concept templates and adds **six app-engagement gamification journeys**, four **M PASS / M GEN membership demos**, three **Priority 3.1 concession cross-selling** concepts, and one **Priority 3.2 at-home popcorn delivery** vision demo.
+Open major-cineplex/index.html from a static server. Use the EN / ไทย toggle. The interactive gallery preserves four of the original five CleverTap gallery adaptations, replaces the streaming-derived checkout recovery with a cinema-specific flow, and adds **six app-engagement gamification journeys**, four **M PASS / M GEN membership demos**, three **Priority 3.1 concession cross-selling** concepts, and one **Priority 3.2 at-home popcorn delivery** vision demo.
 
 ## Branding
 
@@ -21,7 +21,7 @@ Open major-cineplex/index.html from a static server. Use the EN / ไทย togg
 | 5 | Daily spin wheel | Return visits | Major_Daily_Wheel_Spun |
 | 6 | Film carousel | Discovery | Existing carousel tracking scaffold |
 | 7 | Genre poll | Preference enrichment | Existing poll tracking scaffold |
-| 8 | Checkout recovery | Booking conversion | Existing recovery tracking scaffold |
+| 8 | Checkout recovery | Booking conversion | Rebuilt `Major_Booking_Recovery_Clicked` |
 | 9 | Cinema passport (6 verified visits) | Repeat cinema attendance | Major_Passport_Visit_Simulated |
 | 10 | Badge wall | Loyal member recognition | Existing badge scaffold |
 | 11 | Cinema year recap | Retention / sharing | Existing recap scaffold |
@@ -30,7 +30,7 @@ The six new games live in standalone engagement.html with query parameters: mode
 
 ## Bilingual scope
 
-The showcase shell and all six new gamification demos have full English and Thai copy. The five retained upstream-derived HTML experiences preserve their own rendering and events; assets/legacy-th.js provides Thai translation for key displayed copy. **Full production editorial localisation of all upstream experiences remains required.**
+The showcase shell and all six new gamification demos have full English and Thai copy. Four retained upstream-derived HTML experiences preserve their original rendering and event scaffolds; assets/legacy-th.js supplies key Thai translations for those four. The checkout recovery was rewritten with native Thai and English content. **Full production editorial localisation of all upstream experiences remains required.**
 
 ## Demonstrating repeat usage
 
@@ -45,7 +45,7 @@ The showcase shell and all six new gamification demos have full English and Thai
 
 ## Event and production contract
 
-For the six games, track(name, properties) dispatches CustomEvent("major:demo-event") and sends a same-origin message to the parent gallery. It is **event preview only**, not actual CleverTap telemetry. The original five templates retain their existing scaffold.
+For the six games, track(name, properties) dispatches CustomEvent("major:demo-event") and sends a same-origin message to the parent gallery. It is **event preview only**, not actual CleverTap telemetry. Four upstream adaptations retain their event scaffolds. The checkout recovery has new synthetic booking and concession cross-sell events.
 
 Production work requires:
 - Real CleverTap SDK bridge, event data design, user identity/consent and profile integration.
@@ -57,7 +57,7 @@ Production work requires:
 
 ## Attribution
 
-Original five templates are adapted from [SJ Neo's CleverTap Custom HTML Template Gallery](https://github.com/shijunneo-bot/ct-template-gallery): carousel, genre poll, payment recovery, badges, year recap. The six new game designs reuse generic gamification ideas, with independent demo logic.
+The initial five templates were adapted from [SJ Neo's CleverTap Custom HTML Template Gallery](https://github.com/shijunneo-bot/ct-template-gallery): carousel, genre poll, payment recovery, badges, year recap. The checkout screen is now a new cinema-native rebuild. The six game designs reuse generic gamification ideas, with independent demo logic.
 
 ## New: Membership, concession commerce and delivery (13 November 2026)
 
